@@ -5,7 +5,11 @@
   "projects": {
     "ci-web": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -27,7 +31,7 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -85,12 +89,15 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "b1457b29-9f23-4ed7-a433-7d9ed1dce601"
   }
 }

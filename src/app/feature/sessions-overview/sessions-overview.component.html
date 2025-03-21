@@ -1,0 +1,15 @@
+<div class="session__container">
+    <div class="session__card">
+        <h3>Session 1 Title</h3>
+        <p>Session 1 Description</p>
+        <app-button variant="neutral" type="button" (click)="checkIn(session1Id)">Check In</app-button>
+        <p>Check-in Count: {{ sessionCounts[session1Id] || 0 }}</p>
+    </div>
+
+    <div class="session__card">
+        <h3>Session 2 Title</h3>
+        <p>Session 2 Description</p>
+        <app-button variant="neutral" type="button" (click)="checkIn(session2Id)">Check In</app-button>
+        <p>Check-in Count: {{ sessionCounts[session2Id] || 0 }}</p>
+    </div>
+</div>
