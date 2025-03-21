@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+@use "./styles/_reset.scss";
+@use "./styles/_variables.scss";
+
+body {
+    font-family: "Poppins", sans-serif;
+}
+
+.app__container {
+    margin: 1rem 2rem;
+}
