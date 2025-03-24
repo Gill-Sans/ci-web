@@ -3,6 +3,7 @@ import {ButtonComponent} from '../../../shared/button/button.component';
 import {CheckinService} from '../../../core/services/checkin.service';
 import {Subscription} from 'rxjs';
 import {environment} from '../../../../environments/environment';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sessions-overview',
@@ -14,6 +15,7 @@ import {environment} from '../../../../environments/environment';
 })
 export class SessionsOverviewComponent implements OnInit, OnDestroy {
   private readonly checkinService: CheckinService = inject(CheckinService);
+  private readonly router: Router = inject(Router);
 
     session1Id = 'd3b2bfc3-18aa-40f2-8c39-cb0e33ca2cc7';
     session2Id = 'a1b2c3d4-5678-90ab-cdef-1234567890ab';
@@ -40,5 +42,10 @@ export class SessionsOverviewComponent implements OnInit, OnDestroy {
                 console.log('Checked in for session', sessionId);
             })
         );
+    }
+
+    toWelcome() {
+        this.router.navigate(['/']);
+
     }
 }

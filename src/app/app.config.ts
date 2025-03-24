@@ -14,13 +14,13 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideKeycloak({
         config: {
-            url: 'http://localhost:8180/auth',
+            url: 'http://localhost:8180',
             realm: 'Capit',
             clientId: 'angular-client'
         },
         initOptions: {
-            onLoad: 'login-required',
-            silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html'
+            onLoad: 'check-sso',
+            silentCheckSsoRedirectUri: window.location.origin + 'assets/silent-check-sso.html'
         }
     }),
     provideZoneChangeDetection({ eventCoalescing: true }),

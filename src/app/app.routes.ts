@@ -14,6 +14,6 @@ const isUserAdmin = async (route: ActivatedRouteSnapshot, state: RouterStateSnap
 };
 
 export const routes: Routes = [
-  { path: "", component: WelcomeComponent },
-  { path: "sessions", component: SessionsOverviewComponent, canActivate: [createAuthGuard(isUserAuthenticated)] }
+    { path: "", component: WelcomeComponent },
+    { path: "sessions", component: SessionsOverviewComponent, canActivate: [createAuthGuard(isUserAuthenticated)] }
 ];
