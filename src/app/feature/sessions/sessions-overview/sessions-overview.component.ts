@@ -1,8 +1,8 @@
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
-import {ButtonComponent} from '../../shared/button/button.component';
-import {CheckinService} from '../../core/services/checkin.service';
+import {ButtonComponent} from '../../../shared/button/button.component';
+import {CheckinService} from '../../../core/services/checkin.service';
 import {Subscription} from 'rxjs';
-import {environment} from '../../../environments/environment';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-sessions-overview',
