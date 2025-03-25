@@ -10,7 +10,7 @@ export class CheckinService {
 
   checkIn(sessionId: string) {
     return this.http.post(
-        environment.interactionsServiceApiUrl + '/check-ins',
+        environment.BASE_API_URL + '/api/interaction/check-ins',
         {
           "userId": '4e1443ea-e633-43c6-8cbb-9ac83b27a6d3',
           "sessionId": sessionId

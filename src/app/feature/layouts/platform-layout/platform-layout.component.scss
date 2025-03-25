@@ -2,15 +2,6 @@
     height: calc(100vh - 64px);
 }
 
-.example-spacer {
-    flex: 1 1 auto;
-}
-
-mat-sidenav {
-    background-color: var(--mat-sys-surface);
-    padding: 0 1rem;
-}
-
 mat-sidenav-content {
     padding: 1rem;
 }

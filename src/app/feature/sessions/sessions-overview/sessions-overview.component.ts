@@ -1,8 +1,7 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ButtonComponent} from '../../../shared/button/button.component';
 import {CheckinService} from '../../../core/services/checkin.service';
 import {Subscription} from 'rxjs';
-import {environment} from '../../../../environments/environment';
 import {Router} from '@angular/router';
 
 @Component({
@@ -13,7 +12,7 @@ import {Router} from '@angular/router';
   templateUrl: './sessions-overview.component.html',
   styleUrl: './sessions-overview.component.scss'
 })
-export class SessionsOverviewComponent implements OnInit, OnDestroy {
+export class SessionsOverviewComponent /*implements OnInit, OnDestroy*/ {
   private readonly checkinService: CheckinService = inject(CheckinService);
   private readonly router: Router = inject(Router);
 
@@ -23,18 +22,18 @@ export class SessionsOverviewComponent implements OnInit, OnDestroy {
     sessionCounts: {[sessionId: string]: number} = {};
     subscriptions: Subscription[] = [];
 
-    ngOnInit(): void {
-        const source = new EventSource(environment.interactionsServiceApiUrl + '/checkins/stream');
-        source.addEventListener('checkin', (event: any) => {
-            const data = JSON.parse(event.data);
-            console.log('Received SSE event for session', data.sessionId, 'with new count =', data.count);
-            this.sessionCounts[data.sessionId] = data.count;
-        });
-    }
-
-    ngOnDestroy(): void {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
-    }
+    // ngOnInit(): void {
+    //     const source = new EventSource(environment.interactionsServiceApiUrl + '/checkins/stream');
+    //     source.addEventListener('checkin', (event: any) => {
+    //         const data = JSON.parse(event.data);
+    //         console.log('Received SSE event for session', data.sessionId, 'with new count =', data.count);
+    //         this.sessionCounts[data.sessionId] = data.count;
+    //     });
+    // }
+    //
+    // ngOnDestroy(): void {
+    //     this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    // }
 
     checkIn(sessionId: string) {
         this.subscriptions.push(

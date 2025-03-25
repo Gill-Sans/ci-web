@@ -2,18 +2,16 @@
     <button mat-icon-button aria-label="Toggle sidenav" (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
     </button>
-    <span>My App</span>
-    <span class="example-spacer"></span>
-    <button mat-stroked-button aria-label="Login">
-        login
-    </button>
-    <button mat-flat-button aria-label="Register">
-        register
-    </button>
+    <span>Capit - Platform</span>
+    <span class="toolbar__spacer"></span>
+    <div class="toolbar__user" *ngIf="tokenParsed">
+        <span>{{ tokenParsed['given_name'] + ' ' + tokenParsed['family_name']}}</span>
+        <button mat-stroked-button aria-label="Logout" (click)="logout()">logout</button>
+    </div>
 </mat-toolbar>
 
 <mat-sidenav-container class="example-container">
-    <mat-sidenav #sidenav mode="push" [opened]="true">
+    <mat-sidenav #sidenav mode="push">
         <!-- Navigation content can go here -->
         <p>Navigation Menu</p>
         <mat-nav-list>
@@ -22,7 +20,8 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <!-- The routed content will be displayed here -->
-        <router-outlet></router-outlet>
+        <div class="app__container">
+            <router-outlet></router-outlet>
+        </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
