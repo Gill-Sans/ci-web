@@ -2,6 +2,7 @@ import {ActivatedRouteSnapshot, Route, RouterStateSnapshot, Routes} from '@angul
 import {SessionsOverviewComponent} from './feature/sessions/sessions-overview/sessions-overview.component';
 import {WelcomeComponent} from './feature/public/welcome/welcome.component';
 import {AuthGuardData, createAuthGuard} from 'keycloak-angular';
+import {PlatformLayoutComponent} from './feature/layouts/platform-layout/platform-layout.component';
 
 const isUserAuthenticated = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot, authData: AuthGuardData) => {
    const { authenticated } = authData;
@@ -15,5 +16,12 @@ const isUserAdmin = async (route: ActivatedRouteSnapshot, state: RouterStateSnap
 
 export const routes: Routes = [
     { path: "", component: WelcomeComponent },
-    { path: "sessions", component: SessionsOverviewComponent, canActivate: [createAuthGuard(isUserAuthenticated)] }
+    {
+        path: "platform",
+        component: PlatformLayoutComponent,
+        canActivate: [createAuthGuard(isUserAuthenticated)],
+        children: [
+            { path: "sessions", component: SessionsOverviewComponent }
+        ]
+    }
 ];
