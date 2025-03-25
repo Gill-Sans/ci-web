@@ -9,6 +9,8 @@ import {
     KeycloakService,
     provideKeycloak
 } from 'keycloak-angular';
+import {provideAnimations} from '@angular/platform-browser/animations';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,12 +27,14 @@ export const appConfig: ApplicationConfig = {
     }),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+    provideAnimations(),
+    provideNativeDateAdapter(),
     provideHttpClient(withInterceptors([includeBearerTokenInterceptor])),
     {
         provide: INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
         useValue: [
             {
-                urlPattern: /^http:\/\/localhost:9000\/.*$/,
+                urlPattern: /^http:\/\/localhost:9001\/.*$/,
                 httpMethods: ['GET', 'POST', 'PUT', 'DELETE']
             }
         ]
