@@ -3,6 +3,7 @@ import {SessionsOverviewComponent} from './feature/sessions/sessions-overview/se
 import {WelcomeComponent} from './feature/public/welcome/welcome.component';
 import {AuthGuardData, createAuthGuard} from 'keycloak-angular';
 import {PlatformLayoutComponent} from './feature/layouts/platform-layout/platform-layout.component';
+import {PublicLayoutComponent} from './feature/layouts/public-layout/public-layout.component';
 
 const isUserAuthenticated = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot, authData: AuthGuardData) => {
    const { authenticated } = authData;
@@ -15,7 +16,13 @@ const isUserAdmin = async (route: ActivatedRouteSnapshot, state: RouterStateSnap
 };
 
 export const routes: Routes = [
-    { path: "", component: WelcomeComponent },
+    {
+        path: "",
+        component: PublicLayoutComponent,
+        children: [
+            {path: "", component: WelcomeComponent},
+        ]
+    },
     {
         path: "platform",
         component: PlatformLayoutComponent,

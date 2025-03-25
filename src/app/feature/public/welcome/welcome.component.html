@@ -1,10 +1,2 @@
 <p>welcome works!</p>
-<button (click)="login()">login</button>
-<button (click)="logout()">logout</button>
-<button (click)="toSessions()">to sessions</button>
-<div *ngIf="tokenParsed; else noToken">
-    <p>welcome: {{ tokenParsed['given_name'] }} </p>
-</div>
-<ng-template #noToken>
-    <p>no token</p>
-</ng-template>
+

@@ -1,1 +1,18 @@
-<p>public-layout works!</p>
+<mat-toolbar>
+    <span>My App</span>
+    <span class="toolbar__spacer"></span>
+    <div class="toolbar__user" *ngIf="tokenParsed; else noToken">
+        <button mat-flat-button aria-label="Open platform" (click)="toPlatform()">Open platform</button>
+        <button mat-stroked-button aria-label="Logout" (click)="logout()">logout</button>
+    </div>
+    <ng-template #noToken>
+        <div class="toolbar__user">
+            <button mat-stroked-button aria-label="Login" (click)="login()">login</button>
+            <button mat-flat-button aria-label="Register" (click)="register()">register</button>
+        </div>
+    </ng-template>
+</mat-toolbar>
+<div class="app__container">
+    <router-outlet></router-outlet>
+</div>
+
