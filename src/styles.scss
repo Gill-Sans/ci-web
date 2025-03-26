@@ -1,11 +1,52 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use './styles/_theme-colors.scss' as capit-theme;
+
+
+html {
+    @include mat.theme((
+        color: (
+            theme-type: light,
+            primary: capit-theme.$primary-palette,
+            tertiary: capit-theme.$tertiary-palette
+        ),
+        typography: Roboto,
+        density: 0
+    ), $overrides: (
+        // Override the surface token to use primary-95 from your custom palette.
+        surface: map.get(capit-theme.$primary-palette, 95),
+    ));
+}
+
 /* You can add global styles to this file, and also import other style files */
-@use "./styles/_reset.scss";
-@use "./styles/_variables.scss";
+
+html,
+body {
+    height: 100%;
+}
 
 body {
-    font-family: "Poppins", sans-serif;
+    margin: 0;
+    font-family: Roboto, sans-serif, Arial;
 }
 
 .app__container {
-    margin: 1rem 2rem;
+    padding: 1rem 2rem;
+}
+
+.toolbar__spacer {
+    flex: 1 1 auto;
+}
+
+.toolbar__user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+h2,
+p {
+    padding: 16px;
 }
