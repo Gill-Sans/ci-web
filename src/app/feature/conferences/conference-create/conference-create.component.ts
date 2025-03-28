@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,6 +7,8 @@ import { MatButtonModule }      from '@angular/material/button';
 import { MatDatepickerModule }  from '@angular/material/datepicker';
 import { MatNativeDateModule }  from '@angular/material/core';
 import { MatStepperModule }     from '@angular/material/stepper';
+import {CreateConferenceDto} from '../../../core/models/conference/conferenceCreateDto.model';
+import {ConferenceService} from '../../../core/services/conference/conference.service';
 
 @Component({
     selector: 'app-conference-create',
@@ -25,6 +27,8 @@ import { MatStepperModule }     from '@angular/material/stepper';
     styleUrls: ['./conference-create.component.scss']
 })
 export class ConferenceCreateComponent {
+    private readonly conferenceService: ConferenceService = inject(ConferenceService);
+
     conferenceForm: FormGroup;
 
     constructor(private fb: FormBuilder) {
@@ -48,8 +52,11 @@ export class ConferenceCreateComponent {
             }),
             // Step 3: Dates & Checkin Count
             step3: this.fb.group({
-                startTime: [null, Validators.required],
-                endTime: [null, Validators.required],
+                // We'll store the date and time separately, then combine them on submit
+                startDate: [null, Validators.required],
+                startTime: ['', Validators.required],
+                endDate: [null, Validators.required],
+                endTime: ['', Validators.required],
                 checkinCount: [0, Validators.required]
             })
         });
@@ -73,13 +80,48 @@ export class ConferenceCreateComponent {
             const step1 = this.step1FormGroup.value;
             const step2 = this.step2FormGroup.value;
             const step3 = this.step3FormGroup.value;
-            const conferenceData = {
-                ...step1,
-                ...step2,
-                ...step3
+
+            // Combine date and time fields into single ISO strings for startTime and endTime.
+            const combinedStart = this.combineDateTime(step3.startDate, step3.startTime);
+            const combinedEnd = this.combineDateTime(step3.endDate, step3.endTime);
+
+            // Construct the DTO according to the CreateConferenceDto interface.
+            const conferenceData: CreateConferenceDto = {
+                name: step1.name,
+                description: step1.description,
+                speaker: step2.speaker,
+                location: step2.location,
+                startTime: combinedStart,
+                endTime: combinedEnd,
             };
+
             console.log('Conference data:', conferenceData);
-            // TODO: Dispatch command or service call to create the conference.
+
+            // Call the service to create the conference.
+            this.conferenceService.createConference(conferenceData).subscribe({
+                next: (response) => {
+                    console.log('Conference created successfully', response);
+                },
+                error: (err) => {
+                    console.error('Error creating conference', err);
+                }
+            });
         }
+    }
+
+    /**
+     * Combines a Date object (from the datepicker) and a time string ("HH:mm")
+     * into a single ISO string. The backend can parse this as a LocalDateTime.
+     */
+    private combineDateTime(dateObj: Date, timeStr: string): string {
+        //TODO: If dateObj is invalid or timeStr is empty, handle gracefully
+        if (!dateObj || !timeStr) {
+            return '';
+        }
+
+        const [hours, minutes] = timeStr.split(':').map((val) => parseInt(val, 10));
+        const combined = new Date(dateObj);
+        combined.setHours(hours, minutes, 0, 0);
+        return combined.toISOString();
     }
 }

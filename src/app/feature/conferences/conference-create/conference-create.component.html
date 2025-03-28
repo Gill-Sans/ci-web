@@ -1,7 +1,8 @@
-<mat-vertical-stepper linear>
+<mat-stepper orientation="vertical" [linear]="false" #stepper>
     <!-- Step 1: Conference Details -->
     <mat-step [stepControl]="step1FormGroup">
-        <form [formGroup]="step1FormGroup">
+        <ng-template matStepLabel>Fill out conference details</ng-template>
+        <form [formGroup]="step1FormGroup" class="flex-column">
             <h3>Conference Details</h3>
             <mat-form-field appearance="outline">
                 <mat-label>Conference Name</mat-label>
@@ -25,7 +26,8 @@
 
     <!-- Step 2: Speaker & Location -->
     <mat-step [stepControl]="step2FormGroup">
-        <form [formGroup]="step2FormGroup">
+        <ng-template matStepLabel>Fill out conference location</ng-template>
+        <form [formGroup]="step2FormGroup" class="flex-column">
             <h3>Speaker & Location</h3>
             <mat-form-field appearance="outline">
                 <mat-label>Speaker</mat-label>
@@ -34,7 +36,7 @@
                     Speaker is required.
                 </mat-error>
             </mat-form-field>
-            <div formGroupName="location" class="location-group ">
+            <div formGroupName="location" class="flex-column">
                 <h4>Location</h4>
                 <mat-form-field appearance="outline">
                     <mat-label>Country</mat-label>
@@ -84,31 +86,52 @@
     </mat-step>
 
     <!-- Step 3: Dates & Checkin Count -->
+    <!-- Step 3: Dates & Checkin Count -->
     <mat-step [stepControl]="step3FormGroup">
-        <form [formGroup]="step3FormGroup">
+        <ng-template matStepLabel>Fill out conference date</ng-template>
+        <form [formGroup]="step3FormGroup" class="flex-column">
             <h3>Date & Checkin Count</h3>
+
+            <!-- Start Date -->
             <mat-form-field appearance="outline">
-                <mat-label>Start Time</mat-label>
-                <input matInput [matDatepicker]="startPicker" formControlName="startTime" placeholder="Choose a start date">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="startPicker" formControlName="startDate" placeholder="Choose a start date">
                 <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
+                <mat-error *ngIf="step3FormGroup.get('startDate')?.hasError('required')">
+                    Start date is required.
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Start Time -->
+            <mat-form-field appearance="outline">
+                <mat-label>Start Time</mat-label>
+                <input matInput type="time" formControlName="startTime" placeholder="HH:mm">
                 <mat-error *ngIf="step3FormGroup.get('startTime')?.hasError('required')">
                     Start time is required.
                 </mat-error>
             </mat-form-field>
+
+            <!-- End Date -->
             <mat-form-field appearance="outline">
-                <mat-label>End Time</mat-label>
-                <input matInput [matDatepicker]="endPicker" formControlName="endTime" placeholder="Choose an end date">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="endPicker" formControlName="endDate" placeholder="Choose an end date">
                 <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
                 <mat-datepicker #endPicker></mat-datepicker>
+                <mat-error *ngIf="step3FormGroup.get('endDate')?.hasError('required')">
+                    End date is required.
+                </mat-error>
+            </mat-form-field>
+
+            <!-- End Time -->
+            <mat-form-field appearance="outline">
+                <mat-label>End Time</mat-label>
+                <input matInput type="time" formControlName="endTime" placeholder="HH:mm">
                 <mat-error *ngIf="step3FormGroup.get('endTime')?.hasError('required')">
                     End time is required.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Checkin Count</mat-label>
-                <input matInput type="number" formControlName="checkinCount" placeholder="Enter checkin count">
-            </mat-form-field>
+
             <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-raised-button color="primary" type="button" (click)="onSubmit()" [disabled]="conferenceForm.invalid">
@@ -117,4 +140,4 @@
             </div>
         </form>
     </mat-step>
-</mat-vertical-stepper>
+</mat-stepper>
