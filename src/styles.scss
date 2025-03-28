@@ -14,9 +14,6 @@ html {
         ),
         typography: Roboto,
         density: 0
-    ), $overrides: (
-        // Override the surface token to use primary-95 from your custom palette.
-        surface: map.get(capit-theme.$primary-palette, 95),
     ));
 }
 
@@ -49,4 +46,14 @@ body {
 h2,
 p {
     padding: 16px;
+}
+
+
+
+
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }

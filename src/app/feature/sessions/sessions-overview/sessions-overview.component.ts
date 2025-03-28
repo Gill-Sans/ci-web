@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {ButtonComponent} from '../../../shared/button/button.component';
-import {CheckinService} from '../../../core/services/checkin.service';
+import {CheckinService} from '../../../core/services/checkin/checkin.service';
 import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
 

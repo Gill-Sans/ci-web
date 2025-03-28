@@ -1,0 +1,143 @@
+<mat-stepper orientation="vertical" [linear]="false" #stepper>
+    <!-- Step 1: Conference Details -->
+    <mat-step [stepControl]="step1FormGroup">
+        <ng-template matStepLabel>Fill out conference details</ng-template>
+        <form [formGroup]="step1FormGroup" class="flex-column">
+            <h3>Conference Details</h3>
+            <mat-form-field appearance="outline">
+                <mat-label>Conference Name</mat-label>
+                <input matInput formControlName="name" placeholder="Enter conference name">
+                <mat-error *ngIf="step1FormGroup.get('name')?.hasError('required')">
+                    Name is required.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" placeholder="Enter description"></textarea>
+                <mat-error *ngIf="step1FormGroup.get('description')?.hasError('required')">
+                    Description is required.
+                </mat-error>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+
+    <!-- Step 2: Speaker & Location -->
+    <mat-step [stepControl]="step2FormGroup">
+        <ng-template matStepLabel>Fill out conference location</ng-template>
+        <form [formGroup]="step2FormGroup" class="flex-column">
+            <h3>Speaker & Location</h3>
+            <mat-form-field appearance="outline">
+                <mat-label>Speaker</mat-label>
+                <input matInput formControlName="speaker" placeholder="Enter speaker name">
+                <mat-error *ngIf="step2FormGroup.get('speaker')?.hasError('required')">
+                    Speaker is required.
+                </mat-error>
+            </mat-form-field>
+            <div formGroupName="location" class="flex-column">
+                <h4>Location</h4>
+                <mat-form-field appearance="outline">
+                    <mat-label>Country</mat-label>
+                    <input matInput formControlName="country" placeholder="Country">
+                    <mat-error *ngIf="step2FormGroup.get('location.country')?.hasError('required')">
+                        Country is required.
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Street</mat-label>
+                    <input matInput formControlName="street" placeholder="Street">
+                    <mat-error *ngIf="step2FormGroup.get('location.street')?.hasError('required')">
+                        Street is required.
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Number</mat-label>
+                    <input matInput formControlName="number" placeholder="Number">
+                    <mat-error *ngIf="step2FormGroup.get('location.number')?.hasError('required')">
+                        Number is required.
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>ZIP</mat-label>
+                    <input matInput formControlName="zip" placeholder="ZIP code">
+                    <mat-error *ngIf="step2FormGroup.get('location.zip')?.hasError('required')">
+                        ZIP code is required.
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>State</mat-label>
+                    <input matInput formControlName="state" placeholder="State">
+                    <mat-error *ngIf="step2FormGroup.get('location.state')?.hasError('required')">
+                        State is required.
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Location Details</mat-label>
+                    <input matInput formControlName="locationDetails" placeholder="Additional details (optional)">
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+
+    <!-- Step 3: Dates & Checkin Count -->
+    <!-- Step 3: Dates & Checkin Count -->
+    <mat-step [stepControl]="step3FormGroup">
+        <ng-template matStepLabel>Fill out conference date</ng-template>
+        <form [formGroup]="step3FormGroup" class="flex-column">
+            <h3>Date & Checkin Count</h3>
+
+            <!-- Start Date -->
+            <mat-form-field appearance="outline">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="startPicker" formControlName="startDate" placeholder="Choose a start date">
+                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+                <mat-error *ngIf="step3FormGroup.get('startDate')?.hasError('required')">
+                    Start date is required.
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Start Time -->
+            <mat-form-field appearance="outline">
+                <mat-label>Start Time</mat-label>
+                <input matInput type="time" formControlName="startTime" placeholder="HH:mm">
+                <mat-error *ngIf="step3FormGroup.get('startTime')?.hasError('required')">
+                    Start time is required.
+                </mat-error>
+            </mat-form-field>
+
+            <!-- End Date -->
+            <mat-form-field appearance="outline">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="endPicker" formControlName="endDate" placeholder="Choose an end date">
+                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
+                <mat-error *ngIf="step3FormGroup.get('endDate')?.hasError('required')">
+                    End date is required.
+                </mat-error>
+            </mat-form-field>
+
+            <!-- End Time -->
+            <mat-form-field appearance="outline">
+                <mat-label>End Time</mat-label>
+                <input matInput type="time" formControlName="endTime" placeholder="HH:mm">
+                <mat-error *ngIf="step3FormGroup.get('endTime')?.hasError('required')">
+                    End time is required.
+                </mat-error>
+            </mat-form-field>
+
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-raised-button color="primary" type="button" (click)="onSubmit()" [disabled]="conferenceForm.invalid">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </mat-step>
+</mat-stepper>

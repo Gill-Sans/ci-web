@@ -1,0 +1,24 @@
+.conference-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.location-group {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    /* Show 3 columns (auto fill) on large screens, fewer columns on smaller screens */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.mat-vertical-content{
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

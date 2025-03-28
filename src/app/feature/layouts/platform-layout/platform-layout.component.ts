@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {MatDrawerMode, MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
@@ -30,7 +30,7 @@ import Keycloak, {KeycloakTokenParsed} from 'keycloak-js';
   templateUrl: './platform-layout.component.html',
   styleUrl: './platform-layout.component.scss'
 })
-export class PlatformLayoutComponent {
+export class PlatformLayoutComponent implements OnInit {
     private readonly keycloak: Keycloak = inject(Keycloak);
 
     public readonly tokenParsed: KeycloakTokenParsed | undefined = this.keycloak.tokenParsed;
@@ -38,5 +38,10 @@ export class PlatformLayoutComponent {
 
     logout() {
         this.keycloak.logout().then(r => console.log(r));
+    }
+
+    ngOnInit(): void {
+        //log the token but not parsed
+        console.log("token", this.keycloak.token);
     }
 }
