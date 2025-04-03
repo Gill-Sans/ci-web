@@ -156,8 +156,11 @@ export class ConferenceDetailsComponent implements OnInit {
   
   openSessionImportDialog(): void {
     const dialogRef = this.dialog.open(SessionImportDialogComponent, {
-      width: '800px',
-      data: { conferenceId: this.conferenceId }
+      width: '1000px',
+      maxWidth: '90vw',
+      data: { conferenceId: this.conferenceId },
+      autoFocus: true,
+      restoreFocus: true
     });
     
     dialogRef.afterClosed().subscribe(result => {

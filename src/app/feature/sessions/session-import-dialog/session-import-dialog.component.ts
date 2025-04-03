@@ -11,13 +11,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { SessionService } from '../../../core/services/session/session.service';
 import { ImportSessionsRequest, SessionImportStrategyDto, SessionImportStrategyType } from '../../../core/models/session/session-import-strategy.model';
 import { SessionPreviewDto } from '../../../core/models/session/session.model';
 import { finalize } from 'rxjs';
 
-interface SessionImportDialogData {
+export interface SessionImportDialogData {
   conferenceId: string;
 }
 
@@ -37,7 +38,8 @@ interface SessionImportDialogData {
     MatTableModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTooltipModule
   ],
   templateUrl: './session-import-dialog.component.html',
   styleUrl: './session-import-dialog.component.scss'
@@ -48,7 +50,11 @@ export class SessionImportDialogComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
   private dialogRef = inject(MatDialogRef<SessionImportDialogComponent>);
   
-  @Inject(MAT_DIALOG_DATA) private data!: SessionImportDialogData;
+  conferenceId: string;
+  
+  constructor(@Inject(MAT_DIALOG_DATA) public data: SessionImportDialogData) {
+    this.conferenceId = data.conferenceId;
+  }
   
   // Forms
   strategyForm!: FormGroup;
@@ -76,7 +82,7 @@ export class SessionImportDialogComponent implements OnInit {
   createForms(): void {
     this.strategyForm = this.fb.group({
       strategyType: ['', Validators.required],
-      strategyName: ['', Validators.required],
+      strategyName: [''],
       url: ['', Validators.required],
       httpMethod: ['GET', Validators.required],
       additionalParams: this.fb.group({})
@@ -89,6 +95,14 @@ export class SessionImportDialogComponent implements OnInit {
       
       // Reset strategy name when type changes
       this.strategyForm.get('strategyName')?.setValue('');
+      
+      // Update validators based on strategy type
+      if (value === SessionImportStrategyType.ADAPTER) {
+        this.strategyForm.get('strategyName')?.setValidators([Validators.required]);
+      } else {
+        this.strategyForm.get('strategyName')?.clearValidators();
+      }
+      this.strategyForm.get('strategyName')?.updateValueAndValidity();
     });
   }
   
@@ -103,9 +117,11 @@ export class SessionImportDialogComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error loading strategies:', error);
-          this.snackBar.open('Failed to load import strategies', 'Close', {
-            duration: 3000
-          });
+          this.snackBar.open(
+            `Failed to load import strategies: ${error.message}`, 
+            'Close', 
+            { duration: 5000 }
+          );
         }
       });
   }
@@ -124,17 +140,24 @@ export class SessionImportDialogComponent implements OnInit {
     const request: ImportSessionsRequest = this.strategyForm.value;
     this.loadingSessions = true;
     
-    this.sessionService.prepareSessionImport(this.data.conferenceId, request)
+    this.sessionService.prepareSessionImport(this.conferenceId, request)
       .pipe(finalize(() => this.loadingSessions = false))
       .subscribe({
         next: (data) => {
           this.sessions = data;
+          if (this.sessions.length === 0) {
+            this.snackBar.open('No sessions found with the provided configuration', 'Close', {
+              duration: 3000
+            });
+          }
         },
         error: (error) => {
           console.error('Error preparing session import:', error);
-          this.snackBar.open('Failed to prepare session import', 'Close', {
-            duration: 3000
-          });
+          this.snackBar.open(
+            `Failed to prepare session import: ${error.message}`, 
+            'Close', 
+            { duration: 5000 }
+          );
         }
       });
   }
@@ -153,7 +176,7 @@ export class SessionImportDialogComponent implements OnInit {
     
     this.creatingSession = true;
     
-    this.sessionService.createSessions(this.data.conferenceId, this.sessions)
+    this.sessionService.createSessions(this.conferenceId, this.sessions)
       .pipe(finalize(() => this.creatingSession = false))
       .subscribe({
         next: () => {
@@ -173,5 +196,13 @@ export class SessionImportDialogComponent implements OnInit {
   
   cancel(): void {
     this.dialogRef.close();
+  }
+
+  // Format strategy type for display
+  formatStrategyType(type: string): string {
+    return type
+      .split('_')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
   }
 } 
