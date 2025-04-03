@@ -24,18 +24,11 @@
         </form>
     </mat-step>
 
-    <!-- Step 2: Speaker & Location -->
+    <!-- Step 2: Location -->
     <mat-step [stepControl]="step2FormGroup">
         <ng-template matStepLabel>Fill out conference location</ng-template>
         <form [formGroup]="step2FormGroup" class="flex-column">
-            <h3>Speaker & Location</h3>
-            <mat-form-field appearance="outline">
-                <mat-label>Speaker</mat-label>
-                <input matInput formControlName="speaker" placeholder="Enter speaker name">
-                <mat-error *ngIf="step2FormGroup.get('speaker')?.hasError('required')">
-                    Speaker is required.
-                </mat-error>
-            </mat-form-field>
+            <h3>Location</h3>
             <div formGroupName="location" class="flex-column">
                 <h4>Location</h4>
                 <mat-form-field appearance="outline">

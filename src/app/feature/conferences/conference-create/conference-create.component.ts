@@ -38,9 +38,8 @@ export class ConferenceCreateComponent {
                 name: ['', Validators.required],
                 description: ['', Validators.required]
             }),
-            // Step 2: Speaker & Location
+            // Step 2: Location
             step2: this.fb.group({
-                speaker: ['', Validators.required],
                 location: this.fb.group({
                     country: ['', Validators.required],
                     street: ['', Validators.required],
@@ -89,7 +88,6 @@ export class ConferenceCreateComponent {
             const conferenceData: CreateConferenceDto = {
                 name: step1.name,
                 description: step1.description,
-                speaker: step2.speaker,
                 location: step2.location,
                 startTime: combinedStart,
                 endTime: combinedEnd,

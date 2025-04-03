@@ -1,14 +1,11 @@
+import { Address } from "../address/address.model";
+
 export interface Conference {
     id: string;
     name: string;
     description: string;
-    speaker: string;
-    country: string;
-    street: string;
-    number: string;
-    zip: string;
-    state: string;
-    locationDetails?: string;
+    location: Address;
     startTime: string;
     endTime: string;
+    checkinCount?: number;
 }
