@@ -1,15 +1,9 @@
+import { Address } from "../address/address.model";
+
 export interface CreateConferenceDto {
     name: string;
     description: string;
-    speaker: string;
-    location: {
-        country: string;
-        street: string;
-        number: string;
-        zip: string;
-        state: string;
-        locationDetails?: string;
-    };
+    location: Address;
     startTime: string;
     endTime: string;
 }
