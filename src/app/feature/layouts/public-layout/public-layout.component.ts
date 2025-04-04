@@ -38,7 +38,7 @@ export class PublicLayoutComponent implements OnInit {
     }
 
     toPlatform() {
-        this.router.navigate(['/platform/sessions']);
+        this.router.navigate(['/platform/conferences']);
     }
 
     ngOnInit() {

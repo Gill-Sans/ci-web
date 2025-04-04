@@ -294,6 +294,48 @@ $transition: all 0.3s ease;
       font-weight: 500;
     }
   }
+  
+  .checkin-counter {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    
+    .attendee-icons {
+      display: flex;
+      align-items: center;
+      
+      .attendee-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background-color: #e3f2fd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: -8px;
+        border: 1px solid #90caf9;
+        
+        mat-icon {
+          font-size: 16px;
+          height: 16px;
+          width: 16px;
+          line-height: 16px;
+          color: #1976d2;
+        }
+      }
+    }
+    
+    .attendee-count {
+      font-size: 12px;
+      font-weight: 500;
+      color: #1976d2;
+      margin-left: 12px;
+      background-color: #e3f2fd;
+      padding: 2px 6px;
+      border-radius: 10px;
+      border: 1px solid #90caf9;
+    }
+  }
 }
 
 // Empty state
@@ -334,6 +376,43 @@ $transition: all 0.3s ease;
   
   .details-meta {
     flex-direction: column;
+  }
+}
+
+// Add a class for disabled buttons
+.mat-flat-button.mat-button-disabled {
+  background-color: #f5f5f5;
+  color: rgba(0, 0, 0, 0.26);
+}
+
+.disabled-button {
+  opacity: 0.7;
+  cursor: not-allowed;
+  
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.12) !important;
+  }
+}
+
+// Override Material tooltip style
+::ng-deep .mat-tooltip {
+  font-size: 14px !important;
+  max-width: 250px !important;
+  white-space: normal !important;
+  background-color: rgba(97, 97, 97, 0.9) !important;
+}
+
+.debug-info {
+  margin-top: 8px;
+  font-size: 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 4px;
+  border-radius: 4px;
+  color: #666;
+  
+  small {
+    display: block;
+    line-height: 1.4;
   }
 }
 
