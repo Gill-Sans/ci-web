@@ -1,24 +1,23 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { ConferenceService } from '../../../core/services/conference/conference.service';
-import { SessionService } from '../../../core/services/session/session.service';
-import { CheckinService } from '../../../core/services/checkin/checkin.service';
-import { Conference } from '../../../core/models/conference/conference.model';
-import { SessionDetailsDto } from '../../../core/models/session/session.model';
-import { DatePipe } from '@angular/common';
-import { SessionImportDialogComponent } from '../../sessions/session-import-dialog/session-import-dialog.component';
-import { finalize, Subscription } from 'rxjs';
-import { environment } from '../../../../environments/environment';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
+import {CommonModule, DatePipe} from '@angular/common';
+import {ActivatedRoute} from '@angular/router';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatIconModule} from '@angular/material/icon';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {ConferenceService} from '../../../core/services/conference/conference.service';
+import {SessionService} from '../../../core/services/session/session.service';
+import {CheckinService} from '../../../core/services/checkin/checkin.service';
+import {Conference} from '../../../core/models/conference/conference.model';
+import {SessionDetailsDto} from '../../../core/models/session/session.model';
+import {SessionImportDialogComponent} from '../../sessions/session-import-dialog/session-import-dialog.component';
+import {finalize} from 'rxjs';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-conference-details',
@@ -100,12 +99,8 @@ export class ConferenceDetailsComponent implements OnInit, OnDestroy {
 
     this.sessionService.getSessionsByConferenceId(this.conferenceId).subscribe({
       next: (data) => {
-        // Clean up old SSE connections if reloading sessions
         this.cleanupSse();
-
-        // Map sessions to ensure they have IDs
         this.sessions = data.map(session => {
-          // Extract existing IDs
           const existingId = this.getSessionId(session);
 
           // If no ID exists, generate a temporary one
@@ -249,10 +244,8 @@ export class ConferenceDetailsComponent implements OnInit, OnDestroy {
     });
 
     // Convert to array and sort by actual timestamp
-    const result = Array.from(timeGroups.values())
-      .sort((a, b) => a.timestamp - b.timestamp);
-
-    return result;
+      return Array.from(timeGroups.values())
+        .sort((a, b) => a.timestamp - b.timestamp);
   }
 
   openSessionImportDialog(): void {

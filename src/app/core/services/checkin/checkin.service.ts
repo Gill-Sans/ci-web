@@ -2,7 +2,7 @@ import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {CheckinDto} from '../../models/checkin/checkin.model';
-import {Observable, of, tap, map} from 'rxjs';
+import {Observable, of, tap} from 'rxjs';
 import Keycloak from 'keycloak-js';
 
 @Injectable({
