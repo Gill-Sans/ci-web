@@ -5,7 +5,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import Keycloak, {KeycloakTokenParsed} from 'keycloak-js';
 import {CommonModule} from '@angular/common';
-import {routes} from '../../../app.routes';
 
 @Component({
   selector: 'app-public-layout',
@@ -38,7 +37,7 @@ export class PublicLayoutComponent implements OnInit {
     }
 
     toPlatform() {
-        this.router.navigate(['/platform/sessions']);
+        this.router.navigate(['/platform/conferences']);
     }
 
     ngOnInit() {

@@ -1,5 +1,4 @@
-import {ActivatedRouteSnapshot, Route, RouterStateSnapshot, Routes} from '@angular/router';
-import {SessionsOverviewComponent} from './feature/sessions/sessions-overview/sessions-overview.component';
+import {ActivatedRouteSnapshot, RouterStateSnapshot, Routes} from '@angular/router';
 import {WelcomeComponent} from './feature/public/welcome/welcome.component';
 import {AuthGuardData, createAuthGuard} from 'keycloak-angular';
 import {PlatformLayoutComponent} from './feature/layouts/platform-layout/platform-layout.component';
@@ -31,7 +30,6 @@ export const routes: Routes = [
         component: PlatformLayoutComponent,
         canActivate: [createAuthGuard(isUserAuthenticated)],
         children: [
-            { path: "sessions", component: SessionsOverviewComponent },
             { path: "conferences", component: ConferenceOverviewComponent },
             { path: "conferences/create", component: ConferenceCreateComponent },
             { path: "conferences/:id", component: ConferenceDetailsComponent }
