@@ -6,7 +6,6 @@ import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {
     INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
     includeBearerTokenInterceptor,
-    KeycloakService,
     provideKeycloak
 } from 'keycloak-angular';
 import {provideAnimations} from '@angular/platform-browser/animations';
@@ -17,7 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideKeycloak({
         config: {
             url: 'http://localhost:8180',
-            realm: 'Capit',
+            realm: 'capit',
             clientId: 'angular-client'
         },
         initOptions: {
