@@ -3,7 +3,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {catchError, Observable, of, shareReplay, tap} from 'rxjs';
 import {environment} from '../../../../environments/environment';
-import {UserProfile} from '../../../core/models/user/user-profile.model';
+import {UserProfile} from '../../models/user/user-profile.model';
 
 @Injectable({
     providedIn: 'root'
@@ -39,7 +39,7 @@ export class UserService {
 
     updateUserProfile(profile: Partial<UserProfile>): Observable<UserProfile | null> {
         const url = `${this.apiUrl}/details`;
-        
+
         return this.http.patch<UserProfile>(url, profile)
             .pipe(
                 tap(updatedProfile => {
