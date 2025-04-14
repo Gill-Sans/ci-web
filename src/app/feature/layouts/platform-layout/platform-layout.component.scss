@@ -2,6 +2,16 @@
     height: calc(100vh - 64px);
 }
 
+.toolbar__user {
+    cursor: pointer;
+    span{
+        transition: all 0.3s ease-in-out;
+    }
+    :hover {
+        color: #667eea;
+    }
+}
+
 mat-sidenav-content {
     padding: 1rem;
 }

@@ -3,7 +3,7 @@ import {MatDrawerMode, MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatListItem, MatNavList} from '@angular/material/list';
 import {MatLine} from '@angular/material/core';
@@ -32,9 +32,14 @@ import Keycloak, {KeycloakTokenParsed} from 'keycloak-js';
 })
 export class PlatformLayoutComponent implements OnInit {
     private readonly keycloak: Keycloak = inject(Keycloak);
+    private readonly router: Router = inject(Router);
 
     public readonly tokenParsed: KeycloakTokenParsed | undefined = this.keycloak.tokenParsed;
     public mode: FormControl<"over" | "push" | "side" | null> = new FormControl('push' as MatDrawerMode);
+
+    toProfile() {
+        this.router.navigate(['platform', 'profile']);
+    }
 
     logout() {
         this.keycloak.logout().then(r => console.log(r));
