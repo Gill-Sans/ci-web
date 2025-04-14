@@ -13,406 +13,406 @@ $transition: all 0.3s ease;
 
 // Base styles
 .conference-page {
-  color: $text-color;
+    color: $text-color;
 }
 
 .container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .loading-container, .error-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
 
-  p {
-    margin-top: 16px;
-    font-size: 16px;
-  }
+    p {
+        margin-top: 16px;
+        font-size: 16px;
+    }
 }
 
 .error-container {
-  color: #f44336;
+    color: #f44336;
 
-  mat-icon {
-    font-size: 48px;
-    height: 48px;
-    width: 48px;
-  }
+    mat-icon {
+        font-size: 48px;
+        height: 48px;
+        width: 48px;
+    }
 }
 
 // Hero section
 .conference-hero {
-  background: $hero-bg;
-  color: white;
-  padding: 60px 0 40px;
-  margin-bottom: 30px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  
-  h1 {
-    margin: 0 0 16px;
-    font-size: 32px;
-    font-weight: 600;
-  }
-  
-  .conference-dates, .conference-location {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    opacity: 0.9;
-    
-    mat-icon {
-      margin-right: 8px;
-      font-size: 20px;
-      height: 20px;
-      width: 20px;
+    background: $hero-bg;
+    color: white;
+    padding: 60px 0 40px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    h1 {
+        margin: 0 0 16px;
+        font-size: 32px;
+        font-weight: 600;
     }
-  }
+
+    .conference-dates, .conference-location {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        opacity: 0.9;
+
+        mat-icon {
+            margin-right: 8px;
+            font-size: 20px;
+            height: 20px;
+            width: 20px;
+        }
+    }
 }
 
 .main-content {
-  padding-bottom: 50px;
+    padding-bottom: 50px;
 }
 
 .actions-bar {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 30px;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 30px;
 }
 
 // Section styles
 .section-title {
-  font-size: 24px;
-  font-weight: 500;
-  margin: 0 0 20px;
-  padding-bottom: 10px;
-  position: relative;
-  
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background-color: $primary-color;
-  }
+    font-size: 24px;
+    font-weight: 500;
+    margin: 0 0 20px;
+    padding-bottom: 10px;
+    position: relative;
+
+    &:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background-color: $primary-color;
+    }
 }
 
 .conference-details-section, .location-section, .sessions-section {
-  margin-bottom: 40px;
+    margin-bottom: 40px;
 }
 
 // Conference details
 .description-card {
-  background-color: white;
-  border-radius: 8px;
-  padding: 24px;
-  box-shadow: $card-shadow;
-  margin-bottom: 24px;
-  
-  p {
-    margin: 0;
-    line-height: 1.6;
-  }
+    background-color: white;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: $card-shadow;
+    margin-bottom: 24px;
+
+    p {
+        margin: 0;
+        line-height: 1.6;
+    }
 }
 
 .details-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  
-  .meta-item {
     display: flex;
-    align-items: flex-start;
-    background-color: white;
-    border-radius: 8px;
-    padding: 16px;
-    box-shadow: $card-shadow;
-    flex: 1;
-    min-width: 200px;
-    
-    mat-icon {
-      color: $primary-color;
-      margin-right: 12px;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .meta-item {
+        display: flex;
+        align-items: flex-start;
+        background-color: white;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: $card-shadow;
+        flex: 1;
+        min-width: 200px;
+
+        mat-icon {
+            color: $primary-color;
+            margin-right: 12px;
+        }
+
+        .meta-label {
+            color: $text-muted;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .meta-value {
+            font-weight: 500;
+        }
     }
-    
-    .meta-label {
-      color: $text-muted;
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-    
-    .meta-value {
-      font-weight: 500;
-    }
-  }
 }
 
 // Location section
 .location-card {
-  background-color: white;
-  border-radius: 8px;
-  padding: 24px;
-  box-shadow: $card-shadow;
-  
-  .location-details {
-    line-height: 1.6;
-  }
-  
-  .address-line {
-    margin-bottom: 8px;
-    font-size: 16px;
-    
-    &.additional-info {
-      color: $text-muted;
-      font-style: italic;
+    background-color: white;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: $card-shadow;
+
+    .location-details {
+        line-height: 1.6;
     }
-  }
+
+    .address-line {
+        margin-bottom: 8px;
+        font-size: 16px;
+
+        &.additional-info {
+            color: $text-muted;
+            font-style: italic;
+        }
+    }
 }
 
 // Sessions
 .sessions-content {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 .custom-tabs {
-  ::ng-deep {
-    .mat-mdc-tab-header {
-      margin-bottom: 24px;
+    ::ng-deep {
+        .mat-mdc-tab-header {
+            margin-bottom: 24px;
+        }
     }
-  }
 }
 
 .sessions-container {
-  padding: 16px 0;
+    padding: 16px 0;
 }
 
 .time-group {
-  margin-bottom: 36px;
+    margin-bottom: 36px;
 }
 
 .time-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
-  
-  mat-icon {
-    margin-right: 8px;
-    color: $primary-color;
-  }
-  
-  h3 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 500;
-    color: $primary-color;
-  }
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    mat-icon {
+        margin-right: 8px;
+        color: $primary-color;
+    }
+
+    h3 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 500;
+        color: $primary-color;
+    }
 }
 
 .sessions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
 }
 
 .session-card {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: $card-shadow;
-  overflow: hidden;
-  transition: $transition;
-  border-left: 4px solid $primary-color;
-  
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  }
-  
-  &.registration-session {
-    border-left-color: $success-color;
-    
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: $card-shadow;
+    overflow: hidden;
+    transition: $transition;
+    border-left: 4px solid $primary-color;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    &.registration-session {
+        border-left-color: $success-color;
+
+        .session-header {
+            background-color: rgba($success-color, 0.08);
+        }
+    }
+
+    &.special-session {
+        border-left-color: $highlight-color;
+
+        .session-header {
+            background-color: rgba($highlight-color, 0.08);
+        }
+    }
+
     .session-header {
-      background-color: rgba($success-color, 0.08);
+        padding: 16px;
+        background-color: rgba($primary-color, 0.04);
+        border-bottom: 1px solid $border-color;
     }
-  }
-  
-  &.special-session {
-    border-left-color: $highlight-color;
-    
-    .session-header {
-      background-color: rgba($highlight-color, 0.08);
+
+    .session-title {
+        margin: 0 0 8px;
+        font-size: 18px;
+        font-weight: 500;
     }
-  }
-  
-  .session-header {
-    padding: 16px;
-    background-color: rgba($primary-color, 0.04);
-    border-bottom: 1px solid $border-color;
-  }
-  
-  .session-title {
-    margin: 0 0 8px;
-    font-size: 18px;
-    font-weight: 500;
-  }
-  
-  .session-time {
-    color: $text-muted;
-    font-size: 14px;
-  }
-  
-  .session-content {
-    padding: 16px;
-  }
-  
-  .session-detail {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-    
-    mat-icon {
-      font-size: 16px;
-      height: 16px;
-      width: 16px;
-      margin-right: 8px;
-      color: $text-muted;
+
+    .session-time {
+        color: $text-muted;
+        font-size: 14px;
     }
-  }
-  
-  .session-actions {
-    padding: 0 16px 16px;
-    display: flex;
-    justify-content: flex-end;
-    
-    button {
-      font-weight: 500;
+
+    .session-content {
+        padding: 16px;
     }
-  }
-  
-  .checkin-counter {
-    display: flex;
-    align-items: center;
-    margin-top: 8px;
-    
-    .attendee-icons {
-      display: flex;
-      align-items: center;
-      
-      .attendee-icon {
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        background-color: #e3f2fd;
+
+    .session-detail {
         display: flex;
         align-items: center;
-        justify-content: center;
-        margin-right: -8px;
-        border: 1px solid #90caf9;
-        
+        margin-bottom: 12px;
+
         mat-icon {
-          font-size: 16px;
-          height: 16px;
-          width: 16px;
-          line-height: 16px;
-          color: #1976d2;
+            font-size: 16px;
+            height: 16px;
+            width: 16px;
+            margin-right: 8px;
+            color: $text-muted;
         }
-      }
     }
-    
-    .attendee-count {
-      font-size: 12px;
-      font-weight: 500;
-      color: #1976d2;
-      margin-left: 12px;
-      background-color: #e3f2fd;
-      padding: 2px 6px;
-      border-radius: 10px;
-      border: 1px solid #90caf9;
+
+    .session-actions {
+        padding: 0 16px 16px;
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+            font-weight: 500;
+        }
     }
-  }
+
+    .checkin-counter {
+        display: flex;
+        align-items: center;
+        margin-top: 8px;
+
+        .attendee-icons {
+            display: flex;
+            align-items: center;
+
+            .attendee-icon {
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background-color: #e3f2fd;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: -8px;
+                border: 1px solid #90caf9;
+
+                mat-icon {
+                    font-size: 16px;
+                    height: 16px;
+                    width: 16px;
+                    line-height: 16px;
+                    color: #1976d2;
+                }
+            }
+        }
+
+        .attendee-count {
+            font-size: 12px;
+            font-weight: 500;
+            color: #1976d2;
+            margin-left: 12px;
+            background-color: #e3f2fd;
+            padding: 2px 6px;
+            border-radius: 10px;
+            border: 1px solid #90caf9;
+        }
+    }
 }
 
 // Empty state
 .empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 0;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: $card-shadow;
-  
-  mat-icon {
-    font-size: 48px;
-    height: 48px;
-    width: 48px;
-    margin-bottom: 16px;
-    color: $text-muted;
-  }
-  
-  p {
-    margin: 4px 0;
-    font-size: 16px;
-    color: $text-muted;
-  }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: $card-shadow;
+
+    mat-icon {
+        font-size: 48px;
+        height: 48px;
+        width: 48px;
+        margin-bottom: 16px;
+        color: $text-muted;
+    }
+
+    p {
+        margin: 4px 0;
+        font-size: 16px;
+        color: $text-muted;
+    }
 }
 
 // Responsive adjustments
 @media (max-width: 768px) {
-  .conference-hero {
-    padding: 40px 0 30px;
-  }
-  
-  .sessions-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .details-meta {
-    flex-direction: column;
-  }
+    .conference-hero {
+        padding: 40px 0 30px;
+    }
+
+    .sessions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .details-meta {
+        flex-direction: column;
+    }
 }
 
 // Add a class for disabled buttons
 .mat-flat-button.mat-button-disabled {
-  background-color: #f5f5f5;
-  color: rgba(0, 0, 0, 0.26);
+    background-color: #f5f5f5;
+    color: rgba(0, 0, 0, 0.26);
 }
 
 .disabled-button {
-  opacity: 0.7;
-  cursor: not-allowed;
-  
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.12) !important;
-  }
+    opacity: 0.7;
+    cursor: not-allowed;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.12) !important;
+    }
 }
 
 // Override Material tooltip style
 ::ng-deep .mat-tooltip {
-  font-size: 14px !important;
-  max-width: 250px !important;
-  white-space: normal !important;
-  background-color: rgba(97, 97, 97, 0.9) !important;
+    font-size: 14px !important;
+    max-width: 250px !important;
+    white-space: normal !important;
+    background-color: rgba(97, 97, 97, 0.9) !important;
 }
 
 .debug-info {
-  margin-top: 8px;
-  font-size: 10px;
-  background-color: rgba(0, 0, 0, 0.05);
-  padding: 4px;
-  border-radius: 4px;
-  color: #666;
-  
-  small {
-    display: block;
-    line-height: 1.4;
-  }
+    margin-top: 8px;
+    font-size: 10px;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 4px;
+    border-radius: 4px;
+    color: #666;
+
+    small {
+        display: block;
+        line-height: 1.4;
+    }
 }
 

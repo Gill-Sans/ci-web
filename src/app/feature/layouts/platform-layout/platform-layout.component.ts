@@ -11,7 +11,7 @@ import {NgIf} from '@angular/common';
 import Keycloak, {KeycloakTokenParsed} from 'keycloak-js';
 
 @Component({
-  selector: 'app-platform-layout',
+    selector: 'app-platform-layout',
     imports: [
         MatSidenavModule,
         MatButtonModule,
@@ -27,8 +27,8 @@ import Keycloak, {KeycloakTokenParsed} from 'keycloak-js';
         MatLine,
         NgIf,
     ],
-  templateUrl: './platform-layout.component.html',
-  styleUrl: './platform-layout.component.scss'
+    templateUrl: './platform-layout.component.html',
+    styleUrl: './platform-layout.component.scss'
 })
 export class PlatformLayoutComponent implements OnInit {
     private readonly keycloak: Keycloak = inject(Keycloak);

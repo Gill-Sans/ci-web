@@ -1,172 +1,175 @@
 <h2 mat-dialog-title>Import Sessions</h2>
 
 <div mat-dialog-content>
-  <mat-stepper #stepper linear>
-    <!-- Step 1: Choose Import Strategy -->
-    <mat-step [stepControl]="strategyForm" label="Choose Import Strategy">
-      <div class="step-content">
-        <div *ngIf="loadingStrategies" class="loading-container">
-          <mat-spinner diameter="40"></mat-spinner>
-          <p>Loading import strategies...</p>
-        </div>
-        
-        <form [formGroup]="strategyForm" *ngIf="!loadingStrategies">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Import Strategy Type</mat-label>
-            <mat-select formControlName="strategyType" required>
-              <mat-option *ngFor="let type of strategyTypes" [value]="type">
-                {{ formatStrategyType(type) }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="strategyForm.get('strategyType')?.hasError('required')">
-              Strategy type is required
-            </mat-error>
-          </mat-form-field>
-          
-          <mat-form-field appearance="outline" class="full-width" *ngIf="selectedStrategyType === 'ADAPTER'">
-            <mat-label>Adapter</mat-label>
-            <mat-select formControlName="strategyName" required>
-              <mat-option *ngFor="let strategy of filteredStrategies" [value]="strategy.displayName">
-                {{ strategy.displayName }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="strategyForm.get('strategyName')?.hasError('required')">
-              Adapter is required
-            </mat-error>
-          </mat-form-field>
-          
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>API URL</mat-label>
-            <input matInput formControlName="url" placeholder="https://api.example.com/sessions" required>
-            <mat-error *ngIf="strategyForm.get('url')?.hasError('required')">
-              URL is required
-            </mat-error>
-          </mat-form-field>
-          
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>HTTP Method</mat-label>
-            <mat-select formControlName="httpMethod" required>
-              <mat-option value="GET">GET</mat-option>
-              <mat-option value="POST">POST</mat-option>
-            </mat-select>
-            <mat-error *ngIf="strategyForm.get('httpMethod')?.hasError('required')">
-              HTTP method is required
-            </mat-error>
-          </mat-form-field>
+    <mat-stepper #stepper linear>
+        <!-- Step 1: Choose Import Strategy -->
+        <mat-step [stepControl]="strategyForm" label="Choose Import Strategy">
+            <div class="step-content">
+                <div *ngIf="loadingStrategies" class="loading-container">
+                    <mat-spinner diameter="40"></mat-spinner>
+                    <p>Loading import strategies...</p>
+                </div>
 
-          <div class="strategy-actions">
-            <button mat-raised-button color="primary" (click)="prepareSessionImport()" [disabled]="strategyForm.invalid || loadingSessions">
-              <mat-icon>download</mat-icon>
-              Fetch Sessions
-            </button>
-          </div>
-          
-          <div *ngIf="loadingSessions" class="loading-container">
-            <mat-spinner diameter="40"></mat-spinner>
-            <p>Fetching sessions...</p>
-          </div>
-          
-          <div *ngIf="sessions.length > 0" class="session-preview-container">
-            <h3>Found {{ sessions.length }} sessions</h3>
-            <div class="preview-card">
-              <mat-card *ngFor="let session of sessions.slice(0, 3)">
-                <mat-card-header>
-                  <mat-card-title>{{ session.title }}</mat-card-title>
-                  <mat-card-subtitle>{{ session.startTime | date:'medium' }}</mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                  <p><strong>Speaker:</strong> {{ session.speaker }}</p>
-                  <p><strong>Location:</strong> {{ session.locationDetails }}</p>
-                </mat-card-content>
-              </mat-card>
-              <p *ngIf="sessions.length > 3" class="more-sessions">
-                ... and {{ sessions.length - 3 }} more sessions
-              </p>
+                <form [formGroup]="strategyForm" *ngIf="!loadingStrategies">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Import Strategy Type</mat-label>
+                        <mat-select formControlName="strategyType" required>
+                            <mat-option *ngFor="let type of strategyTypes" [value]="type">
+                                {{ formatStrategyType(type) }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="strategyForm.get('strategyType')?.hasError('required')">
+                            Strategy type is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="full-width" *ngIf="selectedStrategyType === 'ADAPTER'">
+                        <mat-label>Adapter</mat-label>
+                        <mat-select formControlName="strategyName" required>
+                            <mat-option *ngFor="let strategy of filteredStrategies" [value]="strategy.displayName">
+                                {{ strategy.displayName }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="strategyForm.get('strategyName')?.hasError('required')">
+                            Adapter is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>API URL</mat-label>
+                        <input matInput formControlName="url" placeholder="https://api.example.com/sessions" required>
+                        <mat-error *ngIf="strategyForm.get('url')?.hasError('required')">
+                            URL is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>HTTP Method</mat-label>
+                        <mat-select formControlName="httpMethod" required>
+                            <mat-option value="GET">GET</mat-option>
+                            <mat-option value="POST">POST</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="strategyForm.get('httpMethod')?.hasError('required')">
+                            HTTP method is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <div class="strategy-actions">
+                        <button mat-raised-button color="primary" (click)="prepareSessionImport()"
+                                [disabled]="strategyForm.invalid || loadingSessions">
+                            <mat-icon>download</mat-icon>
+                            Fetch Sessions
+                        </button>
+                    </div>
+
+                    <div *ngIf="loadingSessions" class="loading-container">
+                        <mat-spinner diameter="40"></mat-spinner>
+                        <p>Fetching sessions...</p>
+                    </div>
+
+                    <div *ngIf="sessions.length > 0" class="session-preview-container">
+                        <h3>Found {{ sessions.length }} sessions</h3>
+                        <div class="preview-card">
+                            <mat-card *ngFor="let session of sessions.slice(0, 3)">
+                                <mat-card-header>
+                                    <mat-card-title>{{ session.title }}</mat-card-title>
+                                    <mat-card-subtitle>{{ session.startTime | date:'medium' }}</mat-card-subtitle>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <p><strong>Speaker:</strong> {{ session.speaker }}</p>
+                                    <p><strong>Location:</strong> {{ session.locationDetails }}</p>
+                                </mat-card-content>
+                            </mat-card>
+                            <p *ngIf="sessions.length > 3" class="more-sessions">
+                                ... and {{ sessions.length - 3 }} more sessions
+                            </p>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="step-actions">
+                    <button mat-button mat-dialog-close>Cancel</button>
+                    <button mat-button matStepperNext [disabled]="sessions.length === 0">Next</button>
+                </div>
             </div>
-          </div>
-        </form>
-        
-        <div class="step-actions">
-          <button mat-button mat-dialog-close>Cancel</button>
-          <button mat-button matStepperNext [disabled]="sessions.length === 0">Next</button>
-        </div>
-      </div>
-    </mat-step>
+        </mat-step>
 
-    <!-- Step 2: Review and Edit Sessions -->
-    <mat-step label="Review and Edit Sessions">
-      <div class="step-content">
-        <div *ngIf="sessions.length === 0" class="empty-state">
-          <mat-icon>event_busy</mat-icon>
-          <p>No sessions to review</p>
-          <p>Please go back and fetch sessions first</p>
-        </div>
-        
-        <div *ngIf="sessions.length > 0" class="sessions-table-container">
-          <h3>Review {{ sessions.length }} sessions</h3>
-          <p>You can remove sessions that you don't want to import.</p>
-          
-          <div class="sessions-grid">
-            <div *ngFor="let session of sessions; let i = index" class="session-review-card">
-              <div class="card-header">
-                <h4 class="session-title" [matTooltip]="session.title">{{ session.title }}</h4>
-                <button mat-icon-button color="warn" (click)="removeSession(i)" matTooltip="Remove session">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
-              
-              <div class="card-content">
-                <div class="session-detail" *ngIf="session.speaker">
-                  <mat-icon>person</mat-icon>
-                  <span>{{ session.speaker }}</span>
+        <!-- Step 2: Review and Edit Sessions -->
+        <mat-step label="Review and Edit Sessions">
+            <div class="step-content">
+                <div *ngIf="sessions.length === 0" class="empty-state">
+                    <mat-icon>event_busy</mat-icon>
+                    <p>No sessions to review</p>
+                    <p>Please go back and fetch sessions first</p>
                 </div>
-                
-                <div class="session-detail">
-                  <mat-icon>schedule</mat-icon>
-                  <span>{{ session.startTime | date:'short' }} - {{ session.endTime | date:'short' }}</span>
+
+                <div *ngIf="sessions.length > 0" class="sessions-table-container">
+                    <h3>Review {{ sessions.length }} sessions</h3>
+                    <p>You can remove sessions that you don't want to import.</p>
+
+                    <div class="sessions-grid">
+                        <div *ngFor="let session of sessions; let i = index" class="session-review-card">
+                            <div class="card-header">
+                                <h4 class="session-title" [matTooltip]="session.title">{{ session.title }}</h4>
+                                <button mat-icon-button color="warn" (click)="removeSession(i)"
+                                        matTooltip="Remove session">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+
+                            <div class="card-content">
+                                <div class="session-detail" *ngIf="session.speaker">
+                                    <mat-icon>person</mat-icon>
+                                    <span>{{ session.speaker }}</span>
+                                </div>
+
+                                <div class="session-detail">
+                                    <mat-icon>schedule</mat-icon>
+                                    <span>{{ session.startTime | date:'short' }}
+                                        - {{ session.endTime | date:'short' }}</span>
+                                </div>
+
+                                <div class="session-detail">
+                                    <mat-icon>room</mat-icon>
+                                    <span>{{ session.locationDetails || 'No Location' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="session-detail">
-                  <mat-icon>room</mat-icon>
-                  <span>{{ session.locationDetails || 'No Location' }}</span>
+
+                <div class="step-actions">
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext [disabled]="sessions.length === 0">Next</button>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-        
-        <div class="step-actions">
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext [disabled]="sessions.length === 0">Next</button>
-        </div>
-      </div>
-    </mat-step>
+        </mat-step>
 
-    <!-- Step 3: Confirm and Import -->
-    <mat-step label="Confirm Import">
-      <div class="step-content">
-        <h3>Ready to Import Sessions</h3>
-        <p>You are about to import {{ sessions.length }} sessions into the conference.</p>
-        <p>Click 'Import Sessions' to complete the process or go back to make changes.</p>
-        
-        <div *ngIf="creatingSession" class="loading-container">
-          <mat-spinner diameter="40"></mat-spinner>
-          <p>Importing sessions...</p>
-        </div>
-        
-        <div class="step-actions">
-          <button mat-button matStepperPrevious [disabled]="creatingSession">Back</button>
-          <button mat-button mat-dialog-close [disabled]="creatingSession">Cancel</button>
-          <button 
-            mat-raised-button 
-            color="primary" 
-            (click)="createSessions()" 
-            [disabled]="sessions.length === 0 || creatingSession">
-            <mat-icon>save</mat-icon>
-            Import Sessions
-          </button>
-        </div>
-      </div>
-    </mat-step>
-  </mat-stepper>
-</div> 
+        <!-- Step 3: Confirm and Import -->
+        <mat-step label="Confirm Import">
+            <div class="step-content">
+                <h3>Ready to Import Sessions</h3>
+                <p>You are about to import {{ sessions.length }} sessions into the conference.</p>
+                <p>Click 'Import Sessions' to complete the process or go back to make changes.</p>
+
+                <div *ngIf="creatingSession" class="loading-container">
+                    <mat-spinner diameter="40"></mat-spinner>
+                    <p>Importing sessions...</p>
+                </div>
+
+                <div class="step-actions">
+                    <button mat-button matStepperPrevious [disabled]="creatingSession">Back</button>
+                    <button mat-button mat-dialog-close [disabled]="creatingSession">Cancel</button>
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        (click)="createSessions()"
+                        [disabled]="sessions.length === 0 || creatingSession">
+                        <mat-icon>save</mat-icon>
+                        Import Sessions
+                    </button>
+                </div>
+            </div>
+        </mat-step>
+    </mat-stepper>
+</div>
