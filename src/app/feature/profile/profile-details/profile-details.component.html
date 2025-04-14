@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="header">
+        <h1>User Profile</h1>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading your profile...</p>
+    </div>
+
+    <div *ngIf="!isLoading" class="profile-content">
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+            <div class="form-section">
+                <h2>Personal Information</h2>
+                <div class="form-row">
+                    <mat-form-field appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="firstName" placeholder="Your first name">
+                        <mat-error *ngIf="profileForm.controls['firstName'].hasError('required')">
+                            First name is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="lastName" placeholder="Your last name">
+                        <mat-error *ngIf="profileForm.controls['lastName'].hasError('required')">
+                            Last name is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" placeholder="Your email address" type="email">
+                    <mat-icon matSuffix>email</mat-icon>
+                    <mat-error *ngIf="profileForm.controls['email'].hasError('required')">
+                        Email is required
+                    </mat-error>
+                    <mat-error *ngIf="profileForm.controls['email'].hasError('email')">
+                        Please enter a valid email address
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-section">
+                <h2>Organization Details</h2>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Company/Branch</mat-label>
+                    <input matInput formControlName="companyBranch" placeholder="Your company/branch (optional)">
+                    <mat-icon matSuffix>business</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <div class="form-actions">
+                <button mat-button type="reset" (click)="loadUserProfile()" [disabled]="isSubmitting">
+                    <mat-icon>refresh</mat-icon> RESET
+                </button>
+                <button
+                    mat-raised-button
+                    color="primary"
+                    [disabled]="profileForm.invalid || isSubmitting"
+                    (click)="saveProfile()">
+                    <mat-icon *ngIf="isSubmitting">sync</mat-icon>
+                    <mat-icon *ngIf="!isSubmitting">save</mat-icon>
+                    <span *ngIf="!isSubmitting">SAVE PROFILE</span>
+                    <span *ngIf="isSubmitting">SAVING...</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

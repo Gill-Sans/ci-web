@@ -7,7 +7,7 @@ import Keycloak, {KeycloakTokenParsed} from 'keycloak-js';
 import {CommonModule} from '@angular/common';
 
 @Component({
-  selector: 'app-public-layout',
+    selector: 'app-public-layout',
     imports: [
         CommonModule,
         MatToolbar,
@@ -15,8 +15,8 @@ import {CommonModule} from '@angular/common';
         MatButtonModule,
         MatIconModule,
     ],
-  templateUrl: './public-layout.component.html',
-  styleUrl: './public-layout.component.scss'
+    templateUrl: './public-layout.component.html',
+    styleUrl: './public-layout.component.scss'
 })
 export class PublicLayoutComponent implements OnInit {
     private readonly keycloak: Keycloak = inject(Keycloak);

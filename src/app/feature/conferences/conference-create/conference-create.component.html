@@ -88,7 +88,8 @@
             <!-- Start Date -->
             <mat-form-field appearance="outline">
                 <mat-label>Start Date</mat-label>
-                <input matInput [matDatepicker]="startPicker" formControlName="startDate" placeholder="Choose a start date">
+                <input matInput [matDatepicker]="startPicker" formControlName="startDate"
+                       placeholder="Choose a start date">
                 <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
                 <mat-error *ngIf="step3FormGroup.get('startDate')?.hasError('required')">
@@ -127,7 +128,8 @@
 
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-raised-button color="primary" type="button" (click)="onSubmit()" [disabled]="conferenceForm.invalid">
+                <button mat-raised-button color="primary" type="button" (click)="onSubmit()"
+                        [disabled]="conferenceForm.invalid">
                     Submit
                 </button>
             </div>

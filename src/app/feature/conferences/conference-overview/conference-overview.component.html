@@ -1,33 +1,33 @@
 <div class="container">
-  <div class="header">
-    <h1>Conferences</h1>
-    <button mat-raised-button color="primary" routerLink="/platform/conferences/create">
-      <mat-icon>add</mat-icon>
-      Create Conference
-    </button>
-  </div>
+    <div class="header">
+        <h1>Conferences</h1>
+        <button mat-raised-button color="primary" routerLink="/platform/conferences/create">
+            <mat-icon>add</mat-icon>
+            Create Conference
+        </button>
+    </div>
 
-  <div *ngIf="loading" class="loading-container">
-    <mat-spinner diameter="50"></mat-spinner>
-    <p>Loading conferences...</p>
-  </div>
+    <div *ngIf="loading" class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading conferences...</p>
+    </div>
 
-  <div *ngIf="error" class="error-container">
-    <mat-icon color="warn">error</mat-icon>
-    <p>{{ error }}</p>
-  </div>
+    <div *ngIf="error" class="error-container">
+        <mat-icon color="warn">error</mat-icon>
+        <p>{{ error }}</p>
+    </div>
 
-  <div *ngIf="!loading && !error && conferences.length === 0" class="empty-state">
-    <mat-icon>event_busy</mat-icon>
-    <p>No conferences found</p>
-    <p>Create a new conference to get started</p>
-  </div>
+    <div *ngIf="!loading && !error && conferences.length === 0" class="empty-state">
+        <mat-icon>event_busy</mat-icon>
+        <p>No conferences found</p>
+        <p>Create a new conference to get started</p>
+    </div>
 
-  <div *ngIf="!loading && !error && conferences.length > 0" class="conferences-grid">
-    @for (conference of conferences; track conference.id) {
-      <mat-card class="conference-card">
-        <mat-card-header>
-          <mat-card-title>{{ conference.name }}</mat-card-title>
+    <div *ngIf="!loading && !error && conferences.length > 0" class="conferences-grid">
+        @for (conference of conferences; track conference.id) {
+        <mat-card class="conference-card">
+          <mat-card-header>
+            <mat-card-title>{{ conference.name }}</mat-card-title>
           <mat-card-subtitle>{{ conference.startTime | date:'medium' }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
@@ -42,6 +42,6 @@
           </button>
         </mat-card-actions>
       </mat-card>
-    }
-  </div>
+        }
+    </div>
 </div>

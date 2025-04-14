@@ -1,9 +1,9 @@
 // core/services/conference/conference.service.ts
 import {inject, Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { CreateConferenceDto } from '../../models/conference/conferenceCreateDto.model';
-import { Conference } from '../../models/conference/conference.model';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {CreateConferenceDto} from '../../models/conference/conferenceCreateDto.model';
+import {Conference} from '../../models/conference/conference.model';
 import {environment} from '../../../../environments/environment';
 
 @Injectable({
