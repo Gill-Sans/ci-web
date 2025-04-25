@@ -18,6 +18,7 @@ import {SessionDetailsDto} from '../../../core/models/session/session.model';
 import {SessionImportDialogComponent} from '../../sessions/session-import-dialog/session-import-dialog.component';
 import {finalize} from 'rxjs';
 import {environment} from '../../../../environments/environment';
+import {SessionCardComponent, CheckinEntry} from '../../../shared/components/session-card/session-card.component';
 
 @Component({
     selector: 'app-conference-details',
@@ -33,7 +34,8 @@ import {environment} from '../../../../environments/environment';
         MatTabsModule,
         MatSnackBarModule,
         DatePipe,
-        MatTooltipModule
+        MatTooltipModule,
+        SessionCardComponent
     ],
     providers: [DatePipe],
     templateUrl: './conference-details.component.html',
@@ -437,5 +439,30 @@ export class ConferenceDetailsComponent implements OnInit, OnDestroy {
      */
     hasValidId(session: SessionDetailsDto): boolean {
         return !!session.id || !!session.sessionId;
+    }
+
+    /**
+     * Get the checkins for a specific session as CheckinEntry array
+     * This is a placeholder implementation; replace with your actual logic
+     */
+    getSessionCheckins(session: SessionDetailsDto): CheckinEntry[] {
+        const sessionId = this.getSessionId(session);
+        if (!sessionId) return [];
+        
+        // For now, return dummy data
+        // In the complete implementation, you'll connect this to your websocket
+        const count = session.checkinCount || 0;
+        const result: CheckinEntry[] = [];
+        
+        for (let i = 0; i < count; i++) {
+            result.push({
+                userId: `user-${i}`,
+                firstName: `User`,
+                lastName: `${i + 1}`,
+                sessionId: sessionId
+            });
+        }
+        
+        return result;
     }
 }

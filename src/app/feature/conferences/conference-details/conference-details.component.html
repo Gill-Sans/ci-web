@@ -104,65 +104,17 @@
                             <div class="sessions-grid">
                                 @for (session of timeGroup.sessions; track session.id || (session.startTime + '-' +
                                 session.locationDetails) || $index) {
-                                <div class="session-card"
-                                  [class.registration-session]="!session.speaker || session.title.toLowerCase().includes('registration') || session.title.toLowerCase().includes('break')"
-                                  [class.special-session]="session.title.toLowerCase().includes('keynote')">
-                                  <div class="session-header">
-                                    <h3 class="session-title">{{ session.title }}</h3>
-                              <div class="session-time">
-                                {{ session.startTime | date:'shortTime' }} - {{ session.endTime | date:'shortTime' }}
-                                </div>
-                              </div>
-                              <div class="session-content">
-                                @if (session.speaker) {
-                                <div class="session-detail">
-                                    <mat-icon>person</mat-icon>
-                                    <span>{{ session.speaker }}</span>
-                                </div>
-                                }
-                                <div class="session-detail">
-                                  <mat-icon>room</mat-icon>
-                                  <span>{{ session.locationDetails || 'No Room' }}</span>
-                              </div>
-                              <!-- Check-in counter -->
-                              <div class="checkin-counter" *ngIf="getSessionId(session)">
-                                <div class="attendee-icons">
-                                  @for (i of [1, 2, 3]; track i) {
-                                @if (i <= getCheckinCount(session)) {
-                                <div class="attendee-icon">
-                                  <mat-icon>person</mat-icon>
-                                </div>
-                                }
-                                }
-                                </div>
-                                @if (getCheckinCount(session) > 3) {
-                                <div class="attendee-count">+{{ getCheckinCount(session) - 3 }}</div>
-                                }
-                                </div>
-                              </div>
-                              <div class="session-actions">
-                                <button
-                                  mat-flat-button
-                                  [color]="getButtonColor(session)"
-                                  [disabled]="isButtonDisabled(session)"
-                                  [matTooltip]="getButtonTooltip(session)"
-                                  [class.disabled-button]="isButtonDisabled(session)"
-                                  (click)="checkInToSession(session)">
-                                  <mat-icon>{{ getButtonIcon(session) }}</mat-icon>
-                                {{ getButtonText(session) }}
-                                </button>
-
-                                <!-- Temporary debug info -->
-                                <div class="debug-info" *ngIf="debugMode">
-                                  <small>ID: {{
-                                getSessionId(session) ? (hasTempId(session) ? 'temp' : getSessionId(session).substring(0, 8)) : 'none'
-                                }}</small>
-                                <small>Checked in: {{ getSessionId(session) && isCheckedIn(getSessionId(session)) }}</small>
-                                <small>Count: {{ getCheckinCount(session) }}</small>
-                                <small>Conflict: {{ hasTimeConflict(session) }}</small>
-                              </div>
-                            </div>
-                          </div>
+                                <app-session-card
+                                  [session]="session"
+                                  [checkins]="getSessionCheckins(session)"
+                                  [isCheckedIn]="!!getSessionId(session) && isCheckedIn(getSessionId(session))"
+                                  [isDisabled]="isButtonDisabled(session)"
+                                  [hasTimeConflict]="hasTimeConflict(session)"
+                                  [buttonTooltip]="getButtonTooltip(session)"
+                                  [hasTempId]="hasTempId(session)"
+                                  [debugMode]="debugMode"
+                                  (checkIn)="checkInToSession(session)">
+                                </app-session-card>
                                 }
                             </div>
                         </div>
