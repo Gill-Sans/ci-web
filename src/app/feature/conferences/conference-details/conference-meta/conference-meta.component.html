@@ -1,0 +1,22 @@
+<div class="conference-details-section">
+    <h2 class="section-title">About This Conference</h2>
+    <div class="description-card">
+        <p>{{ conference.description }}</p>
+    </div>
+    <div class="details-meta">
+        <div class="meta-item">
+            <mat-icon>schedule</mat-icon>
+            <div>
+                <div class="meta-label">Start Time</div>
+                <div class="meta-value">{{ conference.startTime | date:'medium' }}</div>
+            </div>
+        </div>
+        <div class="meta-item">
+            <mat-icon>schedule</mat-icon>
+            <div>
+                <div class="meta-label">End Time</div>
+                <div class="meta-value">{{ conference.endTime | date:'medium' }}</div>
+            </div>
+        </div>
+    </div>
+</div>

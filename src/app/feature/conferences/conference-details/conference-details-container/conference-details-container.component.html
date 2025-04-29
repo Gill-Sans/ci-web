@@ -1,0 +1,38 @@
+<div class="conference-page">
+    <ng-container *ngIf="loading(); else content">
+        <div class="loading-container">
+            <mat-spinner diameter="50"></mat-spinner>
+            <p>Loading conference details...</p>
+        </div>
+    </ng-container>
+
+    <ng-template #content>
+        <div *ngIf="error" class="error-container">
+            <mat-icon color="warn">error</mat-icon>
+            <p>{{ error }}</p>
+        </div>
+
+        <ng-container *ngIf="!error && conference">
+            <app-conference-hero [conference]="conference"></app-conference-hero>
+
+            <div class="container main-content">
+                <div class="actions-bar">
+                    <button mat-raised-button color="primary" (click)="openSessionImportDialog()">
+                        <mat-icon>file_upload</mat-icon> Import Sessions
+                    </button>
+                </div>
+
+                <app-conference-meta [conference]="conference"></app-conference-meta>
+                <app-conference-location [location]="conference.location"></app-conference-location>
+                <div class="sessions-section">
+                    <h2 class="section-title">Sessions Schedule</h2>
+                    <app-sessions-tabs
+                        [dates]="sessionDates"
+                        [groupedSessions]="groupedByDate"
+                        (checkIn)="onCheckIn($event)">
+                    </app-sessions-tabs>
+                </div>
+            </div>
+        </ng-container>
+    </ng-template>
+</div>

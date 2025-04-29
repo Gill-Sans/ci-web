@@ -1,0 +1,31 @@
+// '../../../../../styles/conference_variables';
+@use "../../../../../styles/conference_variables" as *;
+
+.conference-hero {
+    background: $hero-bg;
+    color: white;
+    padding: 60px 0 40px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    h1 {
+        margin: 0 0 16px;
+        font-size: 32px;
+        font-weight: 600;
+    }
+
+    .conference-dates,
+    .conference-location {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        opacity: 0.9;
+
+        mat-icon {
+            margin-right: 8px;
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+        }
+    }
+}

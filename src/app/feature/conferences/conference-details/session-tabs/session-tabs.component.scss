@@ -1,0 +1,11 @@
+.custom-tabs {
+    ::ng-deep {
+        .mat-mdc-tab-header {
+            margin-bottom: 24px;
+        }
+    }
+}
+
+.sessions-container {
+    padding: 16px 0;
+}

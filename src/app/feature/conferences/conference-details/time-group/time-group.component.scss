@@ -1,0 +1,29 @@
+@use "../../../../../styles/conference_variables" as *;
+
+.time-group {
+    margin-bottom: 36px;
+
+    .time-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+
+        mat-icon {
+            margin-right: 8px;
+            color: $primary-color;
+        }
+
+        h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 500;
+            color: $primary-color;
+        }
+    }
+
+    .sessions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+}

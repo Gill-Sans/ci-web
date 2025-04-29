@@ -1,0 +1,17 @@
+<div class="location-section">
+    <h2 class="section-title">Location</h2>
+    <div class="location-card">
+        <div class="location-details">
+            <div class="address-line">
+                <span *ngIf="location.street">{{ location.street }}</span>
+                <span *ngIf="location.number"> {{ location.number }}</span>
+                <span *ngIf="location.zip">, {{ location.zip }}</span>
+                <span *ngIf="location.state">, {{ location.state }}</span>
+                <span *ngIf="location.country">, {{ location.country }}</span>
+            </div>
+            <div *ngIf="location.locationDetails" class="address-line additional-info">
+                {{ location.locationDetails }}
+            </div>
+        </div>
+    </div>
+</div>

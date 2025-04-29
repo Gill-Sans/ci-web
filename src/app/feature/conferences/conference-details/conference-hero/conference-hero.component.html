@@ -1,0 +1,11 @@
+<div class="conference-hero">
+    <h1>{{ conference.name }}</h1>
+    <div class="conference-dates">
+        <mat-icon>event</mat-icon>
+        <span>{{ conference.startTime | date:'mediumDate' }} - {{ conference.endTime | date:'mediumDate' }}</span>
+    </div>
+    <div class="conference-location">
+        <mat-icon>location_on</mat-icon>
+        <span>{{ conference.location.state }}, {{ conference.location.country }}</span>
+    </div>
+</div>

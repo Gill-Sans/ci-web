@@ -11,8 +11,8 @@ export interface SessionPreviewDto {
 }
 
 export interface SessionDetailsDto {
-    id?: string;             // Traditional ID field
-    sessionId?: string;      // Database field name
+    id?: string;
+    sessionId?: string;
     title: string;
     description: string;
     startTime: string;
@@ -21,5 +21,5 @@ export interface SessionDetailsDto {
     address?: Address;
     locationDetails?: string;
     conferenceId: string;
-    checkinCount?: number;   // Check-in count from the backend
+    checkinCount?: number;
 }

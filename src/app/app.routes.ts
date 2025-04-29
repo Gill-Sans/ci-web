@@ -5,7 +5,7 @@ import {PlatformLayoutComponent} from './feature/layouts/platform-layout/platfor
 import {PublicLayoutComponent} from './feature/layouts/public-layout/public-layout.component';
 import {ConferenceCreateComponent} from './feature/conferences/conference-create/conference-create.component';
 import {ConferenceOverviewComponent} from './feature/conferences/conference-overview/conference-overview.component';
-import {ConferenceDetailsComponent} from './feature/conferences/conference-details/conference-details.component';
+import {ConferenceDetailsContainerComponent} from './feature/conferences/conference-details/conference-details-container/conference-details-container.component';
 import {ProfileDetailsComponent} from './feature/profile/profile-details/profile-details.component';
 
 const isUserAuthenticated = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot, authData: AuthGuardData) => {
@@ -33,7 +33,7 @@ export const routes: Routes = [
         children: [
             {path: "conferences", component: ConferenceOverviewComponent},
             {path: "conferences/create", component: ConferenceCreateComponent},
-            {path: "conferences/:id", component: ConferenceDetailsComponent},
+            {path: "conferences/:id", component: ConferenceDetailsContainerComponent},
             {path: "profile", component: ProfileDetailsComponent}
         ]
     }

@@ -1,0 +1,13 @@
+<div class="time-group">
+    <div class="time-header">
+        <mat-icon>access_time</mat-icon>
+        <h3>{{ time }}</h3>
+    </div>
+    <div class="sessions-grid">
+        <app-session-card
+            *ngFor="let session of sessions"
+            [session]="session"
+            (checkIn)="checkIn.emit(session)">
+        </app-session-card>
+    </div>
+</div>
