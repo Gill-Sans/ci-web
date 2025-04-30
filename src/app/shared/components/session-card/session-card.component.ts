@@ -49,16 +49,33 @@ export class SessionCardComponent {
     @Input() checkins: CheckinDto[] = [];
     @Input() isCheckedIn = false;
     @Input() isTimeConflict = false;
+    @Input() variant: 'neutral' | 'warn' | 'danger' = 'neutral';
     @Output() checkIn = new EventEmitter<SessionDetailsDto>();
 
-  get sessionId(): string {
-    // Similar to getSessionId in parent component
-    if (this.session.id) {
-      return this.session.id;
+    /** Up to 5 checkin avatars shown */
+    get displayedCheckins(): CheckinDto[] {
+        return this.checkins.slice(0, 5);
     }
-    if (this.session.sessionId) {
-      return this.session.sessionId;
+    /** Number of additional checkins beyond the 5 displayed */
+    get overflowCount(): number {
+        return this.checkins.length > 5 ? this.checkins.length - 5 : 0;
     }
-    return '';
-  }
+    /** Comma-separated names for overflow tooltip */
+    get overflowNames(): string {
+        return this.checkins
+            .slice(5)
+            .map(c => `${c.firstName} ${c.lastName}`)
+            .join(', ');
+    }
+
+    get sessionId(): string {
+        // Similar to getSessionId in parent component
+        if (this.session.id) {
+            return this.session.id;
+        }
+        if (this.session.sessionId) {
+            return this.session.sessionId;
+        }
+        return '';
+    }
 }

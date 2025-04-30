@@ -32,6 +32,28 @@ export class TimeGroupComponent {
     get hasCheckedInInGroup(): boolean {
         return this.sessions.some(sess => this.checkedInSessionIds.has(sess.sessionId));
     }
+    /**
+     * Returns 'danger' if the session has >=50% of this group's checkins,
+     * 'warn' if >=25%, otherwise 'neutral'.
+     */
+    getVariant(session: SessionDetailsDto): 'neutral' | 'warn' | 'danger' {
+        const total = this.sessions.reduce(
+            (sum, s) => sum + (this.sessionCheckins[s.sessionId]?.length || 0),
+            0
+        );
+        const count = this.sessionCheckins[session.sessionId]?.length || 0;
+        if (total === 0) {
+            return 'neutral';
+        }
+        const ratio = count / total;
+        if (ratio >= 0.5) {
+            return 'danger';
+        }
+        if (ratio >= 0.25) {
+            return 'warn';
+        }
+        return 'neutral';
+    }
     isCheckedInSession(sessionId?: string): boolean {
         return !!sessionId && this.checkedInSessionIds.has(sessionId);
     }

@@ -1,5 +1,8 @@
 <div
     class="session-card"
+    [class.session-card--neutral]="variant === 'neutral'"
+    [class.session-card--warn]="variant === 'warn'"
+    [class.session-card--danger]="variant === 'danger'"
     [class.registration-session]="
     !session.speaker
     || session.title.toLowerCase().includes('registration')
@@ -33,15 +36,16 @@
 
         <!-- attendee avatars -->
         <div *ngIf="checkins.length" class="checkin-avatars">
-            <mat-chip-set>
-                <mat-chip color="primary" selected>
-                    <mat-icon>group</mat-icon>
-                    {{ checkins.length }}
-                </mat-chip>
-                <mat-chip *ngFor="let c of checkins" avatar [matTooltip]="c.firstName + ' ' + c.lastName">
-                    <mat-icon>person</mat-icon>
-                </mat-chip>
-            </mat-chip-set>
+            <div class="avatars">
+                <ng-container *ngFor="let c of displayedCheckins">
+                    <div class="avatar" [matTooltip]="c.firstName + ' ' + c.lastName">
+                        <mat-icon>person</mat-icon>
+                    </div>
+                </ng-container>
+                <div *ngIf="overflowCount" class="avatar avatar--overflow" [matTooltip]="overflowNames">
+                    +{{ overflowCount }}
+                </div>
+            </div>
         </div>
     </div>
 

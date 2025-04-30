@@ -10,6 +10,7 @@
             [checkins]="sessionCheckins[session.sessionId] || []"
             [isCheckedIn]="isCheckedInSession(session.sessionId)"
             [isTimeConflict]="hasCheckedInInGroup && !isCheckedInSession(session.sessionId)"
+            [variant]="getVariant(session)"
             (checkIn)="checkIn.emit(session)">
         </app-session-card>
     </div>
