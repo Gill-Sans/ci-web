@@ -1,4 +1,12 @@
-import {Component, OnInit, OnDestroy, ChangeDetectionStrategy, inject, ChangeDetectorRef} from '@angular/core';
+import {
+    Component,
+    OnInit,
+    OnDestroy,
+    ChangeDetectionStrategy,
+    inject,
+    ChangeDetectorRef,
+    WritableSignal
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ConferenceHeroComponent } from '../conference-hero/conference-hero.component';
@@ -20,6 +28,9 @@ import { signal } from '@angular/core';
 import {TimeGroup} from '../time-group/time-group.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
+import {CheckinActionType} from '../../../../core/models/checkin/checkinTypes.model';
+import {organizeSessions} from '../../../../core/utils/session-organizer';
+import {CheckinDto} from '../../../../core/models/checkin/checkin.model';
 
 @Component({
     standalone: true,
@@ -39,24 +50,27 @@ import {MatIconModule} from '@angular/material/icon';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConferenceDetailsContainerComponent implements OnInit, OnDestroy {
-    conferenceId!: string;
-    conference: Conference | null = null;
-    sessions: SessionDetailsDto[] = [];
-    sessionDates: Date[] = [];
-    groupedByDate: Record<string, { time: string; sessions: SessionDetailsDto[] }[]> = {};
-    loading= signal(true);
-    error: string | null = null;
-    checkinCounts: Record<string, number> = {};
-    private checkinSub?: Subscription;
-    private dialog: MatDialog = inject(MatDialog);
-
-
     private readonly route: ActivatedRoute = inject(ActivatedRoute);
     private readonly conferenceService: ConferenceService = inject(ConferenceService);
     private readonly sessionService: SessionService = inject(SessionService);
     private readonly checkinStream: CheckinStreamService = inject(CheckinStreamService);
+    private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
     private readonly keycloak: Keycloak = inject(Keycloak);
-    private readonly cdr = inject(ChangeDetectorRef);
+
+    conferenceId!: string;
+    conference: Conference | null = null;
+    sessions: SessionDetailsDto[] = [];
+    sessionDates: Date[] = [];
+    groupedByDate: Record<string, TimeGroup[]> = {};
+    loading: WritableSignal<boolean>= signal(true);
+    error: string | null = null;
+    checkinCounts: Record<string, number> = {};
+    checkinSub?: Subscription;
+    dialog: MatDialog = inject(MatDialog);
+    sessionCheckins: Record<string, CheckinDto[]> = {};
+    currentUserId = this.keycloak.tokenParsed?.sub ?? '';
+    checkedInSessionIds = new Set<string>();
+
 
     ngOnInit() {
         this.conferenceId = this.route.snapshot.paramMap.get('id') || '';
@@ -97,69 +111,43 @@ export class ConferenceDetailsContainerComponent implements OnInit, OnDestroy {
     }
 
     private organizeSessions() {
-        const dateSet = new Set<string>();
-        this.sessions.forEach(s => {
-            dateSet.add(new Date(s.startTime).toDateString());
-        });
-
-        this.sessionDates = [...dateSet]
-            .map(ds => new Date(ds))
-            .sort((a, b) => a.getTime() - b.getTime());
-
-        const grouped: Record<string, { time: string; sessions: SessionDetailsDto[] }[]> = {};
-        for (const day of this.sessionDates) {
-            const key = day.toDateString();
-            const daySessions = this.sessions
-                .filter(s => new Date(s.startTime).toDateString() === key)
-                .sort((a, b) =>
-                    new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
-                );
-
-            const slots: { time: string; sessions: SessionDetailsDto[] }[] = [];
-            for (const sess of daySessions) {
-                const time = new Date(sess.startTime)
-                    .toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
-
-                let grp = slots.find(g => g.time === time);
-                if (!grp) {
-                    grp = { time, sessions: [] };
-                    slots.push(grp);
-                }
-                grp.sessions.push(sess);
-            }
-            grouped[key] = slots;
-        }
-
+        const { dates, grouped } = organizeSessions(this.sessions);
+        this.sessionDates  = dates;
         this.groupedByDate = grouped;
         this.cdr.markForCheck();
     }
 
-
     private connectCheckinStream() {
         this.checkinStream.connect(this.conferenceId);
-        this.checkinSub = this.checkinStream.entries$.subscribe(entries => {
-            const counts: Record<string, number> = {};
-            for (const e of entries) {
-                counts[e.sessionId] = (counts[e.sessionId] || 0) + 1;
+        this.checkinSub = this.checkinStream.entries$.subscribe(all => {
+            // 1) Build your map of sessionId → all checkins
+            const bySession: Record<string, CheckinDto[]> = {};
+            all.forEach(ci => {
+                if (!ci.sessionId) return;
+                (bySession[ci.sessionId] ||= []).push(ci);
+            });
+            this.sessionCheckins = bySession;
+
+            // 2) Build the Set of sessionIds that *this user* has checked in to
+            const newSet = new Set<string>();
+            const me = this.currentUserId;
+            for (const [sid, arr] of Object.entries(bySession)) {
+                if (arr.some(ci => ci.userId === me)) {
+                    newSet.add(sid);
+                }
             }
-            this.checkinCounts = counts;
+            // Only log once if it actually changed:
+            if (!areSetsEqual(newSet, this.checkedInSessionIds)) {
+                console.log('[ConferenceDetails] checkedInSessionIds changed →', Array.from(newSet));
+                this.checkedInSessionIds = newSet;
+            }
+
+            this.cdr.markForCheck();
         });
     }
 
-
     onCheckIn(session: SessionDetailsDto) {
-        if (!this.keycloak.authenticated) {
-            console.error('No user ID available, cannot check in');
-            return;
-        }
-
-        const req: CreateCheckinRequest = {
-            userId: this.keycloak.idTokenParsed?.sub || '',
-            conferenceId: this.conferenceId,
-            sessionId: session.id!
-        };
-
-        this.checkinStream.sendCheckin(req);
+        this.checkinStream.sendCheckin(session.sessionId, this.conferenceId);
     }
 
     openSessionImportDialog(): void {
@@ -171,4 +159,10 @@ export class ConferenceDetailsContainerComponent implements OnInit, OnDestroy {
             restoreFocus: true
         });
     }
+}
+
+function areSetsEqual(a: Set<string>, b: Set<string>): boolean {
+    if (a.size !== b.size) return false;
+    for (const x of a) if (!b.has(x)) return false;
+    return true;
 }

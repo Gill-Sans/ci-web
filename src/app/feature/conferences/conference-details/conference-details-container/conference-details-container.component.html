@@ -29,6 +29,8 @@
                     <app-sessions-tabs
                         [dates]="sessionDates"
                         [groupedSessions]="groupedByDate"
+                        [sessionCheckins]="sessionCheckins"
+                        [checkedInSessionIds]="checkedInSessionIds"
                         (checkIn)="onCheckIn($event)">
                     </app-sessions-tabs>
                 </div>

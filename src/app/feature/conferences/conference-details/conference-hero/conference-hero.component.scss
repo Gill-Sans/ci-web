@@ -1,12 +1,19 @@
 // '../../../../../styles/conference_variables';
 @use "../../../../../styles/conference_variables" as *;
 
+:host {
+    position: relative;
+    left: -3rem;
+    box-sizing: border-box;
+}
+
 .conference-hero {
     background: $hero-bg;
     color: white;
-    padding: 60px 0 40px;
+    padding: 2rem 4rem;
     margin-bottom: 30px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100vw;
 
     h1 {
         margin: 0 0 16px;

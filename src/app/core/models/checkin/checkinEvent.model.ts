@@ -1,40 +1,22 @@
-// src/app/core/models/checkin/checkinEvent.model.ts
+import {CheckinDto} from './checkin.model';
+import {CheckinEventType} from './checkinTypes.model';
 
-/** The two event types we support */
-export enum CheckinEventType {
-    INITIAL_SNAPSHOT = 'INITIAL_SNAPSHOT',
-    CHECKIN          = 'CHECKIN'
-}
-
-/** A single attendee’s check-in entry */
-export interface CheckinSnapshotEntry {
-    sessionId: string;
-    userId:    string;
-    firstName: string;
-    lastName:  string;
-}
-
-/** Base for all events */
 interface BaseEvent {
     eventType:    CheckinEventType;
     conferenceId: string;
 }
 
-/** The initial snapshot, sent once on connect */
 export interface InitialSnapshotEvent extends BaseEvent {
     eventType: CheckinEventType.INITIAL_SNAPSHOT;
-    checkins:  CheckinSnapshotEntry[];
+    checkins:  CheckinDto[];
 }
 
-/** A single new check-in, sent after the snapshot */
-export interface CheckinEvent extends BaseEvent {
-    eventType:  CheckinEventType.CHECKIN;
-    sessionId:  string;
-    userId:     string;
-    firstName:  string;
-    lastName:   string;
-    instanceId: string;
+export interface CheckinEventMessage extends BaseEvent {
+    eventType:    CheckinEventType.CHECK_IN | CheckinEventType.CHECK_OUT;
+    checkin: CheckinDto;
 }
 
 /** Union of everything the socket can emit */
-export type CheckinStreamMessage = InitialSnapshotEvent | CheckinEvent;
+export type CheckinStreamMessage =
+    | InitialSnapshotEvent
+    | CheckinEventMessage;

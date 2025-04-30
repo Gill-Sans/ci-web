@@ -5,6 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
+import {SessionDetailsDto} from '../../../core/models/session/session.model';
+import {CheckinDto} from '../../../core/models/checkin/checkin.model';
 
 // Interface for a check-in entry
 export interface CheckinEntry {
@@ -43,17 +45,12 @@ export interface SessionInfo {
   styleUrls: ['./session-card.component.scss']
 })
 export class SessionCardComponent {
-  @Input() session!: SessionInfo;
-  @Input() checkins: CheckinEntry[] = [];
-  @Input() isCheckedIn: boolean = false;
-  @Input() isDisabled: boolean = false;
-  @Input() hasTimeConflict: boolean = false;
-  @Input() buttonTooltip: string = '';
-  @Input() hasTempId: boolean = false;
-  @Input() debugMode: boolean = false;
-  
-  @Output() checkIn = new EventEmitter<SessionInfo>();
-  
+    @Input() session!: SessionDetailsDto;
+    @Input() checkins: CheckinDto[] = [];
+    @Input() isCheckedIn = false;
+    @Input() isTimeConflict = false;
+    @Output() checkIn = new EventEmitter<SessionDetailsDto>();
+
   get sessionId(): string {
     // Similar to getSessionId in parent component
     if (this.session.id) {

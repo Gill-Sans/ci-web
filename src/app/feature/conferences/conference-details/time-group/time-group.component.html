@@ -7,6 +7,9 @@
         <app-session-card
             *ngFor="let session of sessions"
             [session]="session"
+            [checkins]="sessionCheckins[session.sessionId] || []"
+            [isCheckedIn]="isCheckedInSession(session.sessionId)"
+            [isTimeConflict]="hasCheckedInInGroup && !isCheckedInSession(session.sessionId)"
             (checkIn)="checkIn.emit(session)">
         </app-session-card>
     </div>

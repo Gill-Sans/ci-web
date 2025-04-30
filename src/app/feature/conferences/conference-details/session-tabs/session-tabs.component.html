@@ -1,14 +1,13 @@
-<mat-tab-group class="custom-tabs" *ngIf="dates.length > 0">
-    <mat-tab
-        *ngFor="let date of dates"
-        [label]="(date | date:'EEE, MMM d, y') || '' ">
-        <div class="sessions-container">
+<mat-tab-group *ngIf="dates.length">
+    <mat-tab *ngFor="let date of dates" [label]="(date | date:'EEE, MMM d') || ' ' ">
+        <ng-container *ngFor="let group of groupedSessions[date.toDateString()]">
             <app-time-group
-                *ngFor="let group of groupedSessions[date.toDateString()]"
                 [time]="group.time"
                 [sessions]="group.sessions"
+                [sessionCheckins]="sessionCheckins"
+                [checkedInSessionIds]="checkedInSessionIds"
                 (checkIn)="checkIn.emit($event)">
             </app-time-group>
-        </div>
+        </ng-container>
     </mat-tab>
 </mat-tab-group>

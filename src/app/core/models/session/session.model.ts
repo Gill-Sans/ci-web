@@ -11,8 +11,8 @@ export interface SessionPreviewDto {
 }
 
 export interface SessionDetailsDto {
-    id?: string;
-    sessionId?: string;
+    id: string;
+    sessionId: string;
     title: string;
     description: string;
     startTime: string;
