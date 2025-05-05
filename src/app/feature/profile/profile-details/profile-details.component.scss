@@ -31,9 +31,9 @@
 }
 
 .profile-content {
-    background-color: white;
+    background-color: var(--mat-sys-surface-container);
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--mat-sys-shadow);
     padding: 24px;
 }
 
@@ -45,8 +45,8 @@
         margin-bottom: 16px;
         font-size: 20px;
         font-weight: 500;
-        color: rgba(0, 0, 0, 0.8);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        color: var(--mat-sys-on-surface);
+        border-bottom: 1px solid var(--mat-sys-outline);
         padding-bottom: 8px;
     }
 }
@@ -71,12 +71,12 @@
 }
 
 .form-actions {
+    border-top: 1px solid var(--mat-sys-outline);
     display: flex;
     justify-content: flex-end;
     gap: 12px;
     margin-top: 24px;
     padding-top: 16px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
 
     button {
         display: flex;

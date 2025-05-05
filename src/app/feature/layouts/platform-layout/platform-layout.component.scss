@@ -1,5 +1,5 @@
 .example-container {
-    height: calc(100vh - 64px);
+    height: calc(100vh - 4rem);
 }
 
 .toolbar__user {
@@ -7,8 +7,9 @@
     span{
         transition: all 0.3s ease-in-out;
     }
-    :hover {
-        color: #667eea;
+    &:hover {
+        /* primary color */
+        color: var(--mat-sys-primary);
     }
 }
 

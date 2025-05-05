@@ -1,5 +1,4 @@
 import {ActivatedRouteSnapshot, RouterStateSnapshot, Routes} from '@angular/router';
-import {WelcomeComponent} from './feature/public/welcome/welcome.component';
 import {AuthGuardData, createAuthGuard} from 'keycloak-angular';
 import {PlatformLayoutComponent} from './feature/layouts/platform-layout/platform-layout.component';
 import {PublicLayoutComponent} from './feature/layouts/public-layout/public-layout.component';
@@ -21,10 +20,7 @@ const isUserAdmin = async (route: ActivatedRouteSnapshot, state: RouterStateSnap
 export const routes: Routes = [
     {
         path: "",
-        component: PublicLayoutComponent,
-        children: [
-            {path: "", component: WelcomeComponent},
-        ]
+        component: PublicLayoutComponent
     },
     {
         path: "platform",

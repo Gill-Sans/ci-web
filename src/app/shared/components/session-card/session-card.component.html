@@ -45,29 +45,25 @@
 
     <!-- actions (hidden for non-checkin sessions) -->
     <div class="session-actions" *ngIf="!(session | specialSession)">
-        <span
+        <button
+            mat-flat-button
             matTooltip="You are already checked in to another session at this time"
-            [matTooltipDisabled]="!isTimeConflict"
-            class="session-action-wrapper"
+            matTooltipShowOnDisabled="true"
+            class="session-action-button"
+            [class.neutral]="variant === 'neutral'"
+            [class.warn]="variant === 'warn'"
+            [class.danger]="variant === 'danger'"
+            [disabled]="isTimeConflict"
+            (click)="isCheckedIn ? checkOut.emit(session) : checkIn.emit(session)"
         >
-            <button
-                mat-flat-button
-                class="session-action-button"
-                [class.neutral]="variant === 'neutral'"
-                [class.warn]="variant === 'warn'"
-                [class.danger]="variant === 'danger'"
-                [disabled]="isTimeConflict"
-                (click)="isCheckedIn ? checkOut.emit(session) : checkIn.emit(session)"
+            <mat-icon
+                [class.neutral-icon]="variant === 'neutral'"
+                [class.warn-icon]="variant === 'warn'"
+                [class.danger-icon]="variant === 'danger'"
             >
-                <mat-icon
-                    [class.neutral-icon]="variant === 'neutral'"
-                    [class.warn-icon]="variant === 'warn'"
-                    [class.danger-icon]="variant === 'danger'"
-                >
-                    {{ isCheckedIn ? 'person_remove' : 'person_add' }}
-                </mat-icon>
-                {{ isCheckedIn ? 'Check Out' : 'Check In' }}
-            </button>
-        </span>
+                {{ isCheckedIn ? 'person_remove' : 'person_add' }}
+            </mat-icon>
+            {{ isCheckedIn ? 'Check Out' : 'Check In' }}
+        </button>
     </div>
 </div>
