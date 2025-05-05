@@ -3,14 +3,8 @@
     [class.session-card--neutral]="variant === 'neutral'"
     [class.session-card--warn]="variant === 'warn'"
     [class.session-card--danger]="variant === 'danger'"
-    [class.registration-session]="
-    !session.speaker
-    || session.title.toLowerCase().includes('registration')
-    || session.title.toLowerCase().includes('break')
-  "
-    [class.special-session]="
-    session.title.toLowerCase().includes('keynote')
-  "
+    [class.session-card--no-checkin]="session | specialSession"
+    [class.special-session]="session.title.toLowerCase().includes('keynote')"
 >
     <!-- header -->
     <div class="session-header">
@@ -34,8 +28,8 @@
             <span>{{ session.locationDetails || 'No Room' }}</span>
         </div>
 
-        <!-- attendee avatars -->
-        <div *ngIf="checkins.length" class="checkin-avatars">
+        <!-- attendee avatars (hidden for non-checkin sessions) -->
+        <div *ngIf="!(session | specialSession) && checkins.length" class="checkin-avatars">
             <div class="avatars">
                 <ng-container *ngFor="let c of displayedCheckins">
                     <div class="avatar" [matTooltip]="c.firstName + ' ' + c.lastName">
@@ -49,19 +43,31 @@
         </div>
     </div>
 
-    <!-- actions -->
-    <div class="session-actions">
-        <button
-            mat-flat-button
-            [color]="isCheckedIn ? 'primary' : 'accent'"
-            [disabled]="isCheckedIn || isTimeConflict"
-            [matTooltip]="isTimeConflict ? 'You are already checked in to another session at this time' : ''"
-            (click)="checkIn.emit(session)"
+    <!-- actions (hidden for non-checkin sessions) -->
+    <div class="session-actions" *ngIf="!(session | specialSession)">
+        <span
+            matTooltip="You are already checked in to another session at this time"
+            [matTooltipDisabled]="!isTimeConflict"
+            class="session-action-wrapper"
         >
-            <mat-icon>
-                {{ isCheckedIn ? 'how_to_reg' : 'person_add' }}
-            </mat-icon>
-            {{ isCheckedIn ? 'Checked In' : 'Check In' }}
-        </button>
+            <button
+                mat-flat-button
+                class="session-action-button"
+                [class.neutral]="variant === 'neutral'"
+                [class.warn]="variant === 'warn'"
+                [class.danger]="variant === 'danger'"
+                [disabled]="isTimeConflict"
+                (click)="isCheckedIn ? checkOut.emit(session) : checkIn.emit(session)"
+            >
+                <mat-icon
+                    [class.neutral-icon]="variant === 'neutral'"
+                    [class.warn-icon]="variant === 'warn'"
+                    [class.danger-icon]="variant === 'danger'"
+                >
+                    {{ isCheckedIn ? 'person_remove' : 'person_add' }}
+                </mat-icon>
+                {{ isCheckedIn ? 'Check Out' : 'Check In' }}
+            </button>
+        </span>
     </div>
 </div>

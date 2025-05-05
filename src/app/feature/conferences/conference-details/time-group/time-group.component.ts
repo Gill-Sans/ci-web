@@ -58,4 +58,5 @@ export class TimeGroupComponent {
         return !!sessionId && this.checkedInSessionIds.has(sessionId);
     }
     @Output() checkIn = new EventEmitter<SessionDetailsDto>();
+    @Output() checkOut = new EventEmitter<SessionDetailsDto>();
 }

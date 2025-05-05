@@ -24,6 +24,7 @@ export class SessionsTabsComponent {
     @Input() sessionCheckins: Record<string, CheckinDto[]> = {};
     @Input() checkedInSessionIds = new Set<string>();
     @Output() checkIn = new EventEmitter<SessionDetailsDto>();
+    @Output() checkOut = new EventEmitter<SessionDetailsDto>();
 
     isCheckedInSession(sessionId?: string): boolean {
         return !!sessionId && this.checkedInSessionIds.has(sessionId);

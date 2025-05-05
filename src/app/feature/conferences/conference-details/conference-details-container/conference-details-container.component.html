@@ -31,7 +31,8 @@
                         [groupedSessions]="groupedByDate"
                         [sessionCheckins]="sessionCheckins"
                         [checkedInSessionIds]="checkedInSessionIds"
-                        (checkIn)="onCheckIn($event)">
+                        (checkIn)="onCheckIn($event)"
+                        (checkOut)="onCheckOut($event)">
                     </app-sessions-tabs>
                 </div>
             </div>

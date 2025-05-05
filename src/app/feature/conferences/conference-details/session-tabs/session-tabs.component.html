@@ -6,7 +6,8 @@
                 [sessions]="group.sessions"
                 [sessionCheckins]="sessionCheckins"
                 [checkedInSessionIds]="checkedInSessionIds"
-                (checkIn)="checkIn.emit($event)">
+                (checkIn)="checkIn.emit($event)"
+                (checkOut)="checkOut.emit($event)">
             </app-time-group>
         </ng-container>
     </mat-tab>

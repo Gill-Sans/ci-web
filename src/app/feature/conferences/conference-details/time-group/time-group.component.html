@@ -11,7 +11,8 @@
             [isCheckedIn]="isCheckedInSession(session.sessionId)"
             [isTimeConflict]="hasCheckedInInGroup && !isCheckedInSession(session.sessionId)"
             [variant]="getVariant(session)"
-            (checkIn)="checkIn.emit(session)">
+            (checkIn)="checkIn.emit(session)"
+            (checkOut)="checkOut.emit(session)">
         </app-session-card>
     </div>
 </div>

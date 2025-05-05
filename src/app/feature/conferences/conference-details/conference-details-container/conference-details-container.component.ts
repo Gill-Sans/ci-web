@@ -150,6 +150,10 @@ export class ConferenceDetailsContainerComponent implements OnInit, OnDestroy {
         this.checkinStream.sendCheckin(session.sessionId, this.conferenceId);
     }
 
+    onCheckOut(session: SessionDetailsDto) {
+        this.checkinStream.sendCheckout(session.sessionId, this.conferenceId);
+    }
+
     openSessionImportDialog(): void {
         const dialogRef = this.dialog.open(SessionImportDialogComponent, {
             width: '1000px',

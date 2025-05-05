@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
+import { SpecialSessionPipe } from '../../../core/pipes/special-session.pipe';
 import {SessionDetailsDto} from '../../../core/models/session/session.model';
 import {CheckinDto} from '../../../core/models/checkin/checkin.model';
 
@@ -39,7 +40,8 @@ export interface SessionInfo {
     MatIconModule,
     MatTooltipModule,
     MatButtonModule,
-    DatePipe
+    DatePipe,
+    SpecialSessionPipe
   ],
   templateUrl: './session-card.component.html',
   styleUrls: ['./session-card.component.scss']
@@ -51,6 +53,7 @@ export class SessionCardComponent {
     @Input() isTimeConflict = false;
     @Input() variant: 'neutral' | 'warn' | 'danger' = 'neutral';
     @Output() checkIn = new EventEmitter<SessionDetailsDto>();
+    @Output() checkOut = new EventEmitter<SessionDetailsDto>();
 
     /** Up to 5 checkin avatars shown */
     get displayedCheckins(): CheckinDto[] {

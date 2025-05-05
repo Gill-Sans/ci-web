@@ -77,17 +77,38 @@ export class CheckinStreamService {
         this.socket.next(req);
     }
 
+    public sendCheckout(sessionId: string, conferenceId: string): void {
+        if (!this.socket) {
+            console.error('WebSocket not connected!');
+            return;
+        }
+        const req: CreateCheckinRequest = {
+            type: CheckinActionType.CHECK_OUT,
+            userId: this.keycloak.tokenParsed?.sub || '',
+            conferenceId,
+            sessionId,
+        };
+        console.log('[CheckinStreamService] sendCheckout →', req);
+        this.socket.next(req);
+    }
+
     private handleMessage(msg: CheckinStreamMessage) {
         switch (msg.eventType) {
             case CheckinEventType.INITIAL_SNAPSHOT:
                 this._entries.set((msg as InitialSnapshotEvent).checkins);
                 break;
 
-            case CheckinEventType.CHECK_IN:
-            case CheckinEventType.CHECK_OUT:
-                const ev = msg as CheckinEventMessage;
-                this._entries.update(arr => [...arr, ev.checkin]);
+            case CheckinEventType.CHECK_IN: {
+                const evIn = msg as CheckinEventMessage;
+                this._entries.update(arr => [...arr, evIn.checkin]);
                 break;
+            }
+
+            case CheckinEventType.CHECK_OUT: {
+                const evOut = msg as CheckinEventMessage;
+                this._entries.update(arr => arr.filter(c => c.id !== evOut.checkin.id));
+                break;
+            }
         }
     }
 }
