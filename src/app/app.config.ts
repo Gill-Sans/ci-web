@@ -23,7 +23,7 @@ export const appConfig: ApplicationConfig = {
     providers: [
         provideKeycloak({
             config: {
-                url: 'http://localhost:8180',
+                url: environment.KEYCLOAK_URL,
                 realm: 'capit',
                 clientId: 'angular-client'
             },

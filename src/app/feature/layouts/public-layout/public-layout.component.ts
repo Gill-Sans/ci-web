@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {MatToolbar} from '@angular/material/toolbar';
-import {Router, RouterOutlet} from '@angular/router';
+import {Router} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
@@ -12,7 +12,6 @@ import {CommonModule} from '@angular/common';
     imports: [
         CommonModule,
         MatToolbar,
-        RouterOutlet,
         MatButtonModule,
         MatIconModule,
         MatCardModule
