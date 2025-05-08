@@ -54,8 +54,11 @@ pipeline {
     stage('Deploy to Kubernetes') {
       steps {
         withCredentials([file(credentialsId: KUBE_CREDENTIALS, variable: 'KUBECONFIG')]) {
-          sh 'kubectl --kubeconfig=$KUBECONFIG apply -f ci-web/k8s-deployment.yaml'
-          sh 'kubectl --kubeconfig=$KUBECONFIG rollout status deployment/${SERVICE_NAME} --timeout=300s'
+          sh '''
+            export KUBECONFIG=$KUBECONFIG
+            kubectl apply -f ci-web/k8s-deployment.yaml
+            kubectl rollout status deployment/${SERVICE_NAME} --timeout=300s
+          '''
         }
       }
     }
