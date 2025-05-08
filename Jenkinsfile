@@ -2,17 +2,12 @@ import groovy.transform.Field
 
 @Field String TARGET_REPO = ''
 @Field String GHCR_CREDENTIALS = 'ghcr-credentials'
-@Field String SERVICE_NAME = 'capit-gateway'
+@Field String SERVICE_NAME = 'capit-web'
 @Field String KUBE_CREDENTIALS = 'kubeconfig-dev'
+@Field String IMAGE_NAME = "ghcr.io/gill-sans/ci-api/capit-web"
 
 pipeline {
   agent any
-  environment {
-    GHCR_CREDENTIALS = 'ghcr-credentials'
-    KUBE_CREDENTIALS = 'kubeconfig-dev'
-    SERVICE_NAME = 'ci-web'
-    IMAGE_NAME = "ghcr.io/gill-sans/ci-api/${SERVICE_NAME}"
-  }
   stages {
     stage('Checkout') {
       steps {
@@ -23,6 +18,7 @@ pipeline {
         ])
       }
     }
+
     stage('Install & Build') {
       steps {
         dir('ci-web') {
@@ -31,6 +27,7 @@ pipeline {
         }
       }
     }
+
     stage('Build Image') {
       steps {
         script {
@@ -38,6 +35,7 @@ pipeline {
         }
       }
     }
+
     stage('Push Image') {
       steps {
         withCredentials([usernamePassword(
@@ -54,6 +52,7 @@ pipeline {
         }
       }
     }
+
     stage('Deploy to Kubernetes') {
       steps {
         withCredentials([file(credentialsId: KUBE_CREDENTIALS, variable: 'KUBECONFIG')]) {
@@ -63,6 +62,7 @@ pipeline {
       }
     }
   }
+  
   post {
     success {
       echo "Frontend deployed successfully"
@@ -71,4 +71,4 @@ pipeline {
       echo "Frontend deployment failed"
     }
   }
-} 
+}
