@@ -35,7 +35,11 @@ pipeline {
     stage('Build Image') {
       steps {
         script {
-          sh "podman build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
+          sh """
+            podman build --network host \
+              -t ${IMAGE_NAME}:${BUILD_NUMBER} \
+              .
+          """
         }
       }
     }
