@@ -22,16 +22,6 @@ pipeline {
       }
     }
 
-    stage('Install & Build') {
-      steps {
-        dir('ci-web') {
-            sh 'which node || echo "node not found"; which npm || echo "npm not found"; echo $PATH'
-          sh 'npm ci'
-          sh 'npm run build -- --configuration development'
-        }
-      }
-    }
-
     stage('Build Image') {
       steps {
         script {

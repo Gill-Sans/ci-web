@@ -1,7 +1,10 @@
+# ci-web/k8s-deployment.yaml
+# ─────────────────────────────────────────────────────────────────────────────
 apiVersion: v1
 kind: Service
 metadata:
   name: ci-web
+  namespace: default
 spec:
   selector:
     app: ci-web
@@ -13,6 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ci-web
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -25,10 +29,27 @@ spec:
     spec:
       containers:
         - name: ci-web
-          image: myregistry/ci-web:latest
+          image: ghcr.io/gill-sans/ci-api/capit-web:latest
           ports:
             - containerPort: 80
-          env:
-            # add any necessary environment variables here
-            - name: API_BASE_URL
-              value: "http://ci-gateway:9001" 
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ci-web
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: capit-dev.mertenshome.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ci-web
+                port:
+                  number: 80
