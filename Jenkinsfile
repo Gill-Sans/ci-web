@@ -8,6 +8,9 @@ import groovy.transform.Field
 
 pipeline {
   agent any
+  tools {
+      nodejs 'node20'
+    }
   stages {
     stage('Checkout') {
       steps {
@@ -22,6 +25,7 @@ pipeline {
     stage('Install & Build') {
       steps {
         dir('ci-web') {
+            sh 'which node || echo "node not found"; which npm || echo "npm not found"; echo $PATH'
           sh 'npm ci'
           sh 'npm run build -- --configuration development'
         }
@@ -62,7 +66,7 @@ pipeline {
       }
     }
   }
-  
+
   post {
     success {
       echo "Frontend deployed successfully"
