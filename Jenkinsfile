@@ -4,13 +4,13 @@ import groovy.transform.Field
 @Field String GHCR_CREDENTIALS = 'ghcr-credentials'
 @Field String SERVICE_NAME = 'capit-web'
 @Field String KUBE_CREDENTIALS = 'kubeconfig-dev'
-@Field String IMAGE_NAME = "ghcr.io/gill-sans/ci-api/capit-web"
+@Field String IMAGE_NAME = 'ghcr.io/gill-sans/ci-api/capit-web'
 
 pipeline {
   agent any
   tools {
       nodejs 'node20'
-    }
+  }
   stages {
     stage('Checkout') {
       steps {
@@ -35,7 +35,7 @@ pipeline {
     stage('Build Image') {
       steps {
         script {
-          sh "podman build -t ${IMAGE_NAME}:${BUILD_NUMBER} -f ci-web/Dockerfile ."
+          sh "podman build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
         }
       }
     }
@@ -69,10 +69,10 @@ pipeline {
 
   post {
     success {
-      echo "Frontend deployed successfully"
+      echo 'Frontend deployed successfully'
     }
     failure {
-      echo "Frontend deployment failed"
+      echo 'Frontend deployment failed'
     }
   }
 }
