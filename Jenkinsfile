@@ -56,13 +56,9 @@ pipeline {
         withCredentials([file(credentialsId: KUBE_CREDENTIALS, variable: 'KUBECONFIG')]) {
           sh '''
             export KUBECONFIG=$KUBECONFIG
-            echo "Workspace layout:"
-            ls -R .
-
-            echo "Now applying manifest:"
             kubectl apply -f k8s-deployment.yaml
-            kubectl rollout status deployment/${SERVICE_NAME} --timeout=300s
           '''
+          sh "kubectl rollout status deployment/${SERVICE_NAME} --timeout=300s"
         }
       }
     }
