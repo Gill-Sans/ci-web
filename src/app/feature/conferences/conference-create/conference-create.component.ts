@@ -9,6 +9,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatStepperModule} from '@angular/material/stepper';
 import {CreateConferenceDto} from '../../../core/models/conference/conferenceCreateDto.model';
 import {ConferenceService} from '../../../core/services/conference/conference.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-conference-create',
@@ -28,8 +29,10 @@ import {ConferenceService} from '../../../core/services/conference/conference.se
 })
 export class ConferenceCreateComponent {
     private readonly conferenceService: ConferenceService = inject(ConferenceService);
+    private readonly router: Router = inject(Router);
 
     conferenceForm: FormGroup;
+    isSubmitting = false;
 
     constructor(private fb: FormBuilder) {
         this.conferenceForm = this.fb.group({
@@ -76,6 +79,7 @@ export class ConferenceCreateComponent {
 
     onSubmit() {
         if (this.conferenceForm.valid) {
+            this.isSubmitting = true;
             const step1 = this.step1FormGroup.value;
             const step2 = this.step2FormGroup.value;
             const step3 = this.step3FormGroup.value;
@@ -99,9 +103,13 @@ export class ConferenceCreateComponent {
             this.conferenceService.createConference(conferenceData).subscribe({
                 next: (response) => {
                     console.log('Conference created successfully', response);
+                    // Assuming response has an 'id' property
+                    this.router.navigate(['/conferences', response.id]);
+                    this.isSubmitting = false;
                 },
                 error: (err) => {
                     console.error('Error creating conference', err);
+                    this.isSubmitting = false;
                 }
             });
         }

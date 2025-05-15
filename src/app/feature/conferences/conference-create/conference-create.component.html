@@ -129,7 +129,7 @@
             <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-raised-button color="primary" type="button" (click)="onSubmit()"
-                        [disabled]="conferenceForm.invalid">
+                        [disabled]="conferenceForm.invalid || isSubmitting">
                     Submit
                 </button>
             </div>
