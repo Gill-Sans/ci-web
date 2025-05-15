@@ -103,9 +103,10 @@ export class ConferenceCreateComponent {
             this.conferenceService.createConference(conferenceData).subscribe({
                 next: (response) => {
                     console.log('Conference created successfully', response);
-                    // Assuming response has an 'id' property
-                    this.router.navigate(['/conferences', response.id]);
-                    this.isSubmitting = false;
+                    setTimeout(() => {
+                        this.router.navigate(['/platform/conferences', response]);
+                        this.isSubmitting = false;
+                    }, 500);
                 },
                 error: (err) => {
                     console.error('Error creating conference', err);
