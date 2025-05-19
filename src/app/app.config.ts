@@ -23,18 +23,17 @@ export const appConfig: ApplicationConfig = {
     providers: [
         provideKeycloak({
             config: {
-                url: environment.KEYCLOAK_URL,
-                realm: 'capit',
-                clientId: 'angular-client'
+                url: environment.keycloak.url,
+                realm: environment.keycloak.realm,
+                clientId: environment.keycloak.clientId
             },
             initOptions: {
                 onLoad: 'check-sso',
                 silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html',
-                checkLoginIframe: false, // This can improve initialization reliability
-                enableLogging: true // Enable logging for debugging
+                checkLoginIframe: false,
+                enableLogging: true
             }
         }),
-        // Other providers
         provideZoneChangeDetection({eventCoalescing: true}),
         provideRouter(routes),
         provideAnimations(),
@@ -44,8 +43,7 @@ export const appConfig: ApplicationConfig = {
             provide: INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
             useValue: [
                 {
-                    // Make sure pattern matches the BASE_API_URL from environment
-                    urlPattern: new RegExp(`^${environment.BASE_API_URL.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\/.*$`),
+                    urlPattern: new RegExp(`^${environment.backend.url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\/.*$`),
                     httpMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
                 }
             ]

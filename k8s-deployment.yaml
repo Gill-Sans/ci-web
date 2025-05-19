@@ -32,7 +32,7 @@ spec:
       containers:
         - name: capit-web
           image: ghcr.io/gill-sans/ci-api/capit-web:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
 ---

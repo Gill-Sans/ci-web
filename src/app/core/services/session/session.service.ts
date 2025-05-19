@@ -10,9 +10,9 @@ import {SessionDetailsDto, SessionPreviewDto} from '../../models/session/session
 })
 export class SessionService {
     private http = inject(HttpClient);
-    private sessionEndpoint = `${environment.BASE_API_URL}/api/schedule/sessions`;
-    private conferenceEndpoint = `${environment.BASE_API_URL}/api/schedule/conferences`;
-    private strategyEndpoint = `${environment.BASE_API_URL}/api/schedule/session/import`;
+    private sessionEndpoint = `${environment.backend.url}/api/schedule/sessions`;
+    private conferenceEndpoint = `${environment.backend.url}/api/schedule/conferences`;
+    private strategyEndpoint = `${environment.backend.url}/api/schedule/session/import`;
 
     // Get all available import strategies
     getImportStrategies(): Observable<SessionImportStrategyDto[]> {

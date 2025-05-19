@@ -23,7 +23,7 @@ export class CheckinStreamService {
     connect(conferenceId: string) {
         const urlBase = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
         const url =
-            `${urlBase}//${environment.BASE_API_URL_SHORT}` +
+            `${urlBase}//${environment.backend.url_domain}` +
             `/api/interactions/ws/checkins?conferenceId=${conferenceId}`;
 
         this.socket = webSocket<CheckinStreamMessage | CreateCheckinRequest>({

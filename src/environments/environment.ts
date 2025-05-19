@@ -1,6 +1,13 @@
 export const environment = {
     production: false,
-    KEYCLOAK_URL: 'http://localhost:8180',
-    BASE_API_URL: 'http://localhost:9001',
-    BASE_API_URL_SHORT: 'localhost:9001',
+    keycloak: {
+        realm: 'capit',
+        clientId: 'angular-client',
+        url: 'http://localhost:8180',
+        postLogoutRedirectUri: 'http://localhost:4200/logout',
+    },
+    backend: {
+        url: 'http://localhost:9001',
+        url_domain: 'localhost:9001'
+    }
 }

@@ -11,7 +11,7 @@ import {environment} from '../../../../environments/environment';
 })
 export class ConferenceService {
     private http: HttpClient = inject(HttpClient);
-    private conferenceEndpoint = `${environment.BASE_API_URL}/api/schedule/conferences`;
+    private conferenceEndpoint = `${environment.backend.url}/api/schedule/conferences`;
 
     createConference(dto: CreateConferenceDto): Observable<Conference> {
         return this.http.post<Conference>(this.conferenceEndpoint, dto);

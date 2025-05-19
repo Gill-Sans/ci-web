@@ -10,7 +10,7 @@ import {UserProfile} from '../../models/user/user-profile.model';
 })
 export class UserService {
     private http = inject(HttpClient);
-    private apiUrl = `${environment.BASE_API_URL}/api/users`;
+    private apiUrl = `${environment.backend.url}/api/users`;
     private userProfile: UserProfile | null = null;
 
     getUserProfile(): Observable<UserProfile | null> {

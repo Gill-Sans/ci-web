@@ -8,7 +8,8 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatListItem, MatNavList} from '@angular/material/list';
 import {MatLine} from '@angular/material/core';
 import {NgIf} from '@angular/common';
-import Keycloak, {KeycloakTokenParsed} from 'keycloak-js';
+import Keycloak, {KeycloakLogoutOptions, KeycloakTokenParsed} from 'keycloak-js';
+import {environment} from '../../../../environments/environment';
 
 @Component({
     selector: 'app-platform-layout',
@@ -33,6 +34,9 @@ import Keycloak, {KeycloakTokenParsed} from 'keycloak-js';
 export class PlatformLayoutComponent implements OnInit {
     private readonly keycloak: Keycloak = inject(Keycloak);
     private readonly router: Router = inject(Router);
+    private keycloakLogoutOptions: KeycloakLogoutOptions = {
+        redirectUri: environment.keycloak.postLogoutRedirectUri
+    }
 
     public readonly tokenParsed: KeycloakTokenParsed | undefined = this.keycloak.tokenParsed;
     public mode: FormControl<"over" | "push" | "side" | null> = new FormControl('push' as MatDrawerMode);
@@ -42,7 +46,7 @@ export class PlatformLayoutComponent implements OnInit {
     }
 
     logout() {
-        this.keycloak.logout().then(r => console.log(r));
+        this.keycloak.logout(this.keycloakLogoutOptions)
     }
 
     ngOnInit(): void {
