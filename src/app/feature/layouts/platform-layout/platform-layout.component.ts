@@ -1,12 +1,12 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {MatDrawerMode, MatSidenavModule} from "@angular/material/sidenav";
-import {MatToolbar} from '@angular/material/toolbar';
+import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatListItem, MatNavList} from '@angular/material/list';
-import {MatLine} from '@angular/material/core';
+import {MatLineModule} from '@angular/material/core';
 import {NgIf} from '@angular/common';
 import Keycloak, {KeycloakLogoutOptions, KeycloakTokenParsed} from 'keycloak-js';
 import {environment} from '../../../../environments/environment';
@@ -16,7 +16,7 @@ import {environment} from '../../../../environments/environment';
     imports: [
         MatSidenavModule,
         MatButtonModule,
-        MatToolbar,
+        MatToolbarModule,
         MatIconModule,
         RouterOutlet,
         FormsModule,
@@ -25,13 +25,13 @@ import {environment} from '../../../../environments/environment';
         MatNavList,
         MatListItem,
         RouterLinkActive,
-        MatLine,
+        MatLineModule,
         NgIf,
     ],
     templateUrl: './platform-layout.component.html',
     styleUrl: './platform-layout.component.scss'
 })
-export class PlatformLayoutComponent implements OnInit {
+export class PlatformLayoutComponent {
     private readonly keycloak: Keycloak = inject(Keycloak);
     private readonly router: Router = inject(Router);
     private keycloakLogoutOptions: KeycloakLogoutOptions = {
@@ -47,10 +47,5 @@ export class PlatformLayoutComponent implements OnInit {
 
     logout() {
         this.keycloak.logout(this.keycloakLogoutOptions)
-    }
-
-    ngOnInit(): void {
-        //log the token but not parsed
-        console.log("token", this.keycloak.token);
     }
 }

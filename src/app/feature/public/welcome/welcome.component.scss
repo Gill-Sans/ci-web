@@ -1,0 +1,57 @@
+/* Public Landing Page Styles */
+.public-hero {
+    background-color: var(--mat-sys-primary-container);
+    color: var(--mat-sys-on-primary-container);
+    padding: 4rem 2rem;
+    text-align: center;
+
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        font-size: 1.125rem;
+        max-width: 40rem;
+        margin: 0 auto;
+        line-height: 1.5;
+    }
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.feature-card {
+    background-color: var(--mat-sys-surface-container);
+    color: var(--mat-sys-on-surface);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: var(--mat-sys-shadow);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-0.5rem);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    mat-icon {
+        font-size: 2rem;
+        color: var(--mat-sys-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    h3 {
+        margin: 0.5rem 0;
+        font-size: 1.25rem;
+    }
+
+    p {
+        font-size: 1rem;
+        color: var(--mat-sys-on-surface-variant);
+    }
+}

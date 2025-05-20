@@ -4,8 +4,8 @@
     </button>
     <span>Capit - Platform</span>
     <span class="toolbar__spacer"></span>
-    <div class="toolbar__user" *ngIf="tokenParsed" (click)="toProfile()">
-        <span>{{ tokenParsed['given_name'] + ' ' + tokenParsed['family_name']}}</span>
+    <div class="toolbar__user" *ngIf="tokenParsed">
+        <span (click)="toProfile()">{{ tokenParsed['given_name'] + ' ' + tokenParsed['family_name']}}</span>
         <button mat-stroked-button aria-label="Logout" (click)="logout()">logout</button>
     </div>
 </mat-toolbar>

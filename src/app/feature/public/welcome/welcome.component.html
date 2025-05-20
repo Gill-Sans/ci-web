@@ -1,0 +1,15 @@
+<ng-container>
+    <section class="public-hero">
+        <h1>Welcome to Capit</h1>
+        <p>Your go-to conference companion: plan sessions, check in & out, and track live attendance in real time.</p>
+    </section>
+    <section class="features-grid">
+        @for (feature of features; track feature.id) {
+        <mat-card class="feature-card">
+            <mat-icon>{{ feature.icon }}</mat-icon>
+            <h3>{{ feature.title }}</h3>
+            <p>{{ feature.description }}</p>
+        </mat-card>
+        }
+    </section>
+</ng-container>

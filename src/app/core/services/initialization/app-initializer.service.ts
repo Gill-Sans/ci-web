@@ -14,7 +14,7 @@ export class AppInitializerService {
      * @param maxAttempts Maximum number of attempts to check
      * @param delayMs Delay between attempts in milliseconds
      */
-    private async waitForKeycloakInit(maxAttempts = 5, delayMs = 300): Promise<boolean> {
+    private async waitForKeycloakInit(maxAttempts = 1, delayMs = 300): Promise<boolean> {
         let attempts = 0;
 
         while (attempts < maxAttempts) {

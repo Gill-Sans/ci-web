@@ -14,24 +14,19 @@ export class UserService {
     private userProfile: UserProfile | null = null;
 
     getUserProfile(): Observable<UserProfile | null> {
-        // Return cached profile if available
         if (this.userProfile) {
             return of(this.userProfile);
         }
 
-        // Log the URL being requested for debugging
         const url = `${this.apiUrl}/details`;
-        console.log(`Fetching user profile from: ${url}`);
 
         return this.http.get<UserProfile>(url)
             .pipe(
                 tap(profile => {
-                    console.log('Profile successfully loaded');
                     this.userProfile = profile;
                 }),
                 shareReplay(1),
                 catchError((error: HttpErrorResponse) => {
-                    console.error('Failed to load profile, this is expected if API is not running or user is not logged in');
                     return of(null);
                 })
             );

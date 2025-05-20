@@ -1,11 +1,12 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {MatToolbar} from '@angular/material/toolbar';
-import {Router} from '@angular/router';
+import {Router, RouterOutlet} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
-import Keycloak, {KeycloakTokenParsed} from 'keycloak-js';
+import Keycloak, {KeycloakLogoutOptions, KeycloakTokenParsed} from 'keycloak-js';
 import {CommonModule} from '@angular/common';
+import {environment} from '../../../../environments/environment';
 
 @Component({
     selector: 'app-public-layout',
@@ -14,22 +15,21 @@ import {CommonModule} from '@angular/common';
         MatToolbar,
         MatButtonModule,
         MatIconModule,
-        MatCardModule
+        MatCardModule,
+        RouterOutlet
     ],
     templateUrl: './public-layout.component.html',
     styleUrl: './public-layout.component.scss'
 })
-export class PublicLayoutComponent implements OnInit {
+export class PublicLayoutComponent {
     private readonly keycloak: Keycloak = inject(Keycloak);
     private readonly router: Router = inject(Router);
 
     public readonly tokenParsed: KeycloakTokenParsed | undefined = this.keycloak.tokenParsed;
-    public features = [
-        { icon: 'event',       title: 'Session Scheduling',   description: 'Browse and organize sessions ahead of time.' },
-        { icon: 'person_add',  title: 'Easy Check-in/Out',    description: 'Quickly check in and out of sessions with a single click.' },
-        { icon: 'people',      title: 'Live Attendance',      description: 'See who is attending in real time.' },
-        { icon: 'bar_chart',   title: 'Analytics & Reports',  description: 'Export attendance data and gain insights for your event.' }
-    ];
+
+    private keycloakLogoutOptions: KeycloakLogoutOptions = {
+        redirectUri: environment.keycloak.postLogoutRedirectUri
+    }
 
     login() {
         this.keycloak.login().then(r => console.log(r));
@@ -40,16 +40,10 @@ export class PublicLayoutComponent implements OnInit {
     }
 
     logout() {
-        this.keycloak.logout().then(r => console.log(r));
+        this.keycloak.logout(this.keycloakLogoutOptions).then(r => console.log(r));
     }
 
     toPlatform() {
         this.router.navigate(['/platform/conferences']);
-    }
-
-    ngOnInit() {
-        if (this.keycloak.authenticated) {
-            console.log(this.tokenParsed);
-        }
     }
 }

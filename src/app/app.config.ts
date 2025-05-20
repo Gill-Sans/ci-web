@@ -16,7 +16,7 @@ import {environment} from '../environments/environment';
 // Function for the app initialization that uses inject() in the correct context
 function initializeApp() {
   const appInitializerService = inject(AppInitializerService);
-  return appInitializerService.initializeUserProfile();
+  //return appInitializerService.initializeUserProfile();
 }
 
 export const appConfig: ApplicationConfig = {

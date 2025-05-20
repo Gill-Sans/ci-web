@@ -13,18 +13,6 @@
     </ng-template>
 </mat-toolbar>
 <div class="app__container">
-    <ng-container>
-        <section class="public-hero">
-            <h1>Welcome to Capit</h1>
-            <p>Your go-to conference companion: plan sessions, check in & out, and track live attendance in real time.</p>
-        </section>
-        <section class="features-grid">
-            <mat-card *ngFor="let feature of features" class="feature-card">
-                <mat-icon>{{ feature.icon }}</mat-icon>
-                <h3>{{ feature.title }}</h3>
-                <p>{{ feature.description }}</p>
-            </mat-card>
-        </section>
-    </ng-container>
+    <router-outlet></router-outlet>
 </div>
 

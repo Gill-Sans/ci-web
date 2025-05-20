@@ -6,6 +6,8 @@ import {ConferenceCreateComponent} from './feature/conferences/conference-create
 import {ConferenceOverviewComponent} from './feature/conferences/conference-overview/conference-overview.component';
 import {ConferenceDetailsContainerComponent} from './feature/conferences/conference-details/conference-details-container/conference-details-container.component';
 import {ProfileDetailsComponent} from './feature/profile/profile-details/profile-details.component';
+import {WelcomeComponent} from './feature/public/welcome/welcome.component';
+import {LogoutComponent} from './feature/public/logout/logout.component';
 
 const isUserAuthenticated = async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot, authData: AuthGuardData) => {
     const {authenticated} = authData;
@@ -20,7 +22,11 @@ const isUserAdmin = async (route: ActivatedRouteSnapshot, state: RouterStateSnap
 export const routes: Routes = [
     {
         path: "",
-        component: PublicLayoutComponent
+        component: PublicLayoutComponent,
+        children: [
+            {path: '', component: WelcomeComponent},
+            {path: 'logout', component: LogoutComponent},
+        ]
     },
     {
         path: "platform",

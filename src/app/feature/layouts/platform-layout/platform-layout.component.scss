@@ -24,7 +24,7 @@ mat-nav-list {
     gap: 1rem;
 }
 
-.mat-mdc-list-item-unscoped-content {
+::ng-deep.mdc-list-item__primary-text {
     display: flex;
     align-items: center;
     gap: 1rem;
