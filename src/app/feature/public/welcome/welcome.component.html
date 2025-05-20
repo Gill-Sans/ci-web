@@ -6,8 +6,10 @@
     <section class="features-grid">
         @for (feature of features; track feature.id) {
         <mat-card class="feature-card">
-            <mat-icon>{{ feature.icon }}</mat-icon>
-            <h3>{{ feature.title }}</h3>
+            <div class="feature-header">
+                <mat-icon>{{ feature.icon }}</mat-icon>
+                <h3>{{ feature.title }}</h3>
+            </div>
             <p>{{ feature.description }}</p>
         </mat-card>
         }

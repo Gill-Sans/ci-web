@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {MatCard, MatCardModule} from "@angular/material/card";
-import {CommonModule, NgForOf} from "@angular/common";
-import {MatIcon, MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from "@angular/material/card";
+import {CommonModule} from "@angular/common";
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-welcome',
@@ -15,9 +15,9 @@ import {MatIcon, MatIconModule} from '@angular/material/icon';
 })
 export class WelcomeComponent {
     public features = [
-        { id: 1,icon: 'event', title: 'Session Scheduling',description: 'Browse and organize sessions ahead of time.' },
+        { id: 1,icon: 'event', title: 'Conference Scheduling',description: 'Easily import and schedule conferences.' },
         { id: 2,icon: 'person_add',  title: 'Easy Check-in/Out', description: 'Quickly check in and out of sessions with a single click.' },
-        { id: 3,icon: 'people', title: 'Live Attendance', description: 'See who is attending in real time.' },
-        { id: 4,icon: 'bar_chart', title: 'Analytics & Reports', description: 'Export attendance data and gain insights for your event.' }
+        { id: 3,icon: 'people', title: 'Live Attendance', description: 'See who is attending which sessions in real time.' },
+        { id: 4,icon: 'bar_chart', title: 'Attendance distribution', description: 'Get insights about attendance distribution.' },
     ];
 }
