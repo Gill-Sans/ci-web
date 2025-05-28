@@ -106,7 +106,7 @@ export class ConferenceCreateComponent {
                     setTimeout(() => {
                         this.router.navigate(['/platform/conferences', response]);
                         this.isSubmitting = false;
-                    }, 1500);
+                    }, 5000);
                 },
                 error: (err) => {
                     console.error('Error creating conference', err);
